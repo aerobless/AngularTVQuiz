@@ -17,6 +17,10 @@ import { Answer } from './answer';
       <button type="button" class="btn btn-primary" (click)="checkAnswer()">
         Check
       </button>
+      
+      <button type="button" class="btn btn-primary" (click)="messageTest()">
+        Message test
+      </button>
     `
 })
 
@@ -26,14 +30,31 @@ export class AppComponent {
   currentQuestionId = 0;
   currentQuestion = QUESTIONS[0];
   selectedAnswer: Answer;
+
+  socket = null;
+
+  constructor(){
+    /*this.socket = io('http://localhost:8000');
+    this.socket.on('greetings', function(message, id){
+      console.log( 'Got a message from the server: "' + message + "', my ID is: " + id );
+    }.bind(this));*/
+  }
+
+  messageTest(){
+
+    ///this.socket.emit( 'message', 'Hello from the client' );
+  }
+
   onSelect(answer: Answer) { this.selectedAnswer = answer; }
 
   checkAnswer(){
-    if(this.selectedAnswer.correct){
+    if(this.selectedAnswer != null && this.selectedAnswer.correct){
       alert("Correct!");
       this.nextQuestion();
-    }else{
+    }else if(this.selectedAnswer != null && !this.selectedAnswer.correct){
       alert("Wrong..");
+    }else{
+      alert("Please select an answer first..");
     }
   }
 
