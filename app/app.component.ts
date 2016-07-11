@@ -3,7 +3,18 @@ import { Component } from '@angular/core';
   selector: 'my-app',
   template: `
     <h1>{{title}}</h1>
-    <h2>{{questions[0].text}}</h2>
+    <h2>Question: {{questions[0].text}}</h2>
+      <h3>Select the correct answer</h3>
+      <ul>
+        <li *ngFor="let answer of questions[0].answers" (click)="onSelect(answer)">
+            <span>{{answer.text}}</span><span [hidden]="!(answer==selectedAnswer)"> (selected)</span>
+        </li>
+      </ul>
+    
+    <!-- button to go to next question -->
+    
+    <hr>
+    <h2>Experiments:</h2>
     <div>
       <label>question: </label>
       <input [(ngModel)]="questions[0].text" placeholder="question">
@@ -25,6 +36,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Angular TV Quiz'
   questions = QUESTIONS;
+  selectedAnswer: Answer;
+  onSelect(answer: Answer) { this.selectedAnswer = answer; }
 }
 
 export class Question {
