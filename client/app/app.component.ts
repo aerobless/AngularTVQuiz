@@ -34,10 +34,10 @@ export class AppComponent {
   socket = null;
 
   constructor(){
-    /*this.socket = io('http://localhost:8000');
+    this.socket = io('http://localhost:8000');
     this.socket.on('greetings', function(message, id){
       console.log( 'Got a message from the server: "' + message + "', my ID is: " + id );
-    }.bind(this));*/
+    }.bind(this));
   }
 
   messageTest(){
