@@ -1,53 +1,48 @@
 import { Component } from '@angular/core';
+import { Question } from './question';
+import { Answer } from './answer';
+
 @Component({
   selector: 'my-app',
   template: `
     <h1>{{title}}</h1>
-    <h2>Question: {{questions[0].text}}</h2>
+    <h2>Question: {{currentQuestion.text}}</h2>
       <h3>Select the correct answer</h3>
       <ul>
-        <li *ngFor="let answer of questions[0].answers" (click)="onSelect(answer)">
-            <span>{{answer.text}}</span><span [hidden]="!(answer==selectedAnswer)"> (selected)</span>
+        <li *ngFor="let answer of currentQuestion.answers" (click)="onSelect(answer)">
+            <span>{{answer.text}}</span><span *ngIf="answer==selectedAnswer"> (selected)</span>
         </li>
       </ul>
-    
-    <!-- button to go to next question -->
-    
-    <hr>
-    <h2>Experiments:</h2>
-    <div>
-      <label>question: </label>
-      <input [(ngModel)]="questions[0].text" placeholder="question">
-    </div>
-    <h2>Questions</h2>
-    <ul>
-      <li *ngFor="let question of questions">
-        <span>{{question.text}}</span>
-        <ul>
-          <li *ngFor="let answer of question.answers">
-              <span>{{answer.text}}</span>
-          </li>
-        </ul>
-      </li>
-    </ul>
+      
+      <button type="button" class="btn btn-primary" (click)="checkAnswer()">
+        Check
+      </button>
     `
 })
 
 export class AppComponent {
   title = 'Angular TV Quiz'
   questions = QUESTIONS;
+  currentQuestionId = 0;
+  currentQuestion = QUESTIONS[0];
   selectedAnswer: Answer;
   onSelect(answer: Answer) { this.selectedAnswer = answer; }
-}
 
-export class Question {
-  text: string;
-  answers: Answer[];
-}
+  checkAnswer(){
+    if(this.selectedAnswer.correct){
+      alert("Correct!");
+      this.nextQuestion();
+    }else{
+      alert("Wrong..");
+    }
+  }
 
-export class Answer {
-  text: string;
-  correct: boolean;
+  nextQuestion(){
+    this.currentQuestionId += 1;
+    if(QUESTIONS.length > this.currentQuestionId){
+      this.currentQuestion = this.questions[this.currentQuestionId];
+    }
+  }
 }
 
 const QUESTIONS: Question[] = [
