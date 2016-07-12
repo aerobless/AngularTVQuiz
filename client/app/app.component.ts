@@ -6,7 +6,10 @@ import { QuestionService } from './question.service';
     selector: 'my-app',
     template: `
     <h1>{{title}}</h1>
-    <a [routerLink]="['/quiz']">Quiz</a>
+    <nav>
+        <a [routerLink]="['/quiz']">Quiz</a>
+        <a [routerLink]="['/start']">Start</a>
+    </nav>
     <router-outlet></router-outlet>
   `,
     directives: [ROUTER_DIRECTIVES],

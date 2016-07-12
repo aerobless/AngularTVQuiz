@@ -9,24 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-var question_service_1 = require('./question.service');
-var AppComponent = (function () {
-    function AppComponent() {
-        this.title = 'Angular Quiz Start Screen';
+var StartComponent = (function () {
+    function StartComponent() {
     }
-    AppComponent = __decorate([
+    StartComponent = __decorate([
         core_1.Component({
-            selector: 'my-app',
-            template: "\n    <h1>{{title}}</h1>\n    <nav>\n        <a [routerLink]=\"['/quiz']\">Quiz</a>\n        <a [routerLink]=\"['/start']\">Start</a>\n    </nav>\n    <router-outlet></router-outlet>\n  ",
-            directives: [router_1.ROUTER_DIRECTIVES],
-            providers: [
-                question_service_1.QuestionService
-            ]
+            selector: 'my-start',
+            template: '<h3>Start Screen (todo username)</h3>'
         }), 
         __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ], StartComponent);
+    return StartComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.StartComponent = StartComponent;
+//# sourceMappingURL=start.component.js.map
