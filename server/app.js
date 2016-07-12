@@ -9,14 +9,14 @@ var io = require('socket.io')(http);
 let questionState = 0;
 io.on('connection', function (socket) {
     console.log('a user connected');
-    socket.on('questionRequest', function (msg) {
+    socket.on('questionRequest', function (quizId) {
         questionState++;
         if (questionState == QUESTIONS.length) {
             questionState = 0;
         }
         let question = QUESTIONS[questionState];
-        socket.broadcast.emit('questionResponse', question);
-        socket.emit('questionResponse', question);
+        socket.broadcast.emit('questionResponse', question, quizId);
+        socket.emit('questionResponse', question, quizId);
     });
 });
 const QUESTIONS = [

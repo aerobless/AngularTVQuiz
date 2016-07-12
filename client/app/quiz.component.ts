@@ -33,9 +33,11 @@ export class QuizComponent implements OnInit, OnDestroy {
 
     this.currentQuestion = new Question();
 
-    this.socket.on('questionResponse', function(message, id){
+    this.socket.on('questionResponse', function(message, quizId){
       console.log( 'Got a message from the server: "' + message );
-      this.currentQuestion = message;
+      if(this.quizId == quizId){
+        this.currentQuestion = message;
+      }
     }.bind(this));
 
     this.socket.emit( 'questionRequest', this.quizId); //TODO: request differently
