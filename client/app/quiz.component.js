@@ -10,11 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
-var question_service_1 = require('./question.service');
+var userdata_service_1 = require('./services/userdata.service');
+var question_service_1 = require('./services/question.service');
 var QuizComponent = (function () {
-    function QuizComponent(questionService, route) {
+    function QuizComponent(questionService, route, userDataService) {
         this.questionService = questionService;
         this.route = route;
+        this.userDataService = userDataService;
         this.title = 'Angular TV Quiz';
         this.currentQuestionId = 0;
         this.socket = null;
@@ -26,9 +28,11 @@ var QuizComponent = (function () {
     QuizComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.sub = this.route.params.subscribe(function (params) {
-            _this.id = params['id'];
+            _this.quizId = params['id'];
         });
         this.getQuestions();
+        this.playerName = this.userDataService.getUsername();
+        //TODO: check if playerName is empty, if so navigate back to start
     };
     QuizComponent.prototype.ngOnDestroy = function () {
         this.sub.unsubscribe();
@@ -62,9 +66,10 @@ var QuizComponent = (function () {
     QuizComponent = __decorate([
         core_1.Component({
             selector: 'my-quiz',
-            templateUrl: 'app/templates/quiz.component.html'
+            templateUrl: 'app/templates/quiz.component.html',
+            providers: [question_service_1.QuestionService]
         }), 
-        __metadata('design:paramtypes', [question_service_1.QuestionService, router_1.ActivatedRoute])
+        __metadata('design:paramtypes', [question_service_1.QuestionService, router_1.ActivatedRoute, userdata_service_1.UserDataService])
     ], QuizComponent);
     return QuizComponent;
 }());

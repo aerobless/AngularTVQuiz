@@ -11,14 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var core_2 = require('angular2-cookie/core');
+var userdata_service_1 = require('./services/userdata.service');
 var StartComponent = (function () {
-    function StartComponent(router, cookieService) {
+    function StartComponent(router, userDataService) {
         this.router = router;
-        this.cookieService = cookieService;
+        this.userDataService = userDataService;
     }
     StartComponent.prototype.ngOnInit = function () {
         this.quizId = this.makeId(5);
-        this.playerName = this.cookieService.get("ATVQ_USERNAME");
+        this.playerName = this.userDataService.getUsername();
     };
     StartComponent.prototype.makeId = function (idLength) {
         var randomId = "";
@@ -28,20 +29,17 @@ var StartComponent = (function () {
         return randomId;
     };
     StartComponent.prototype.startQuiz = function () {
-        this.storeUsername();
+        this.userDataService.setUsername(this.playerName);
         var link = ['/quiz', this.quizId];
         this.router.navigate(link);
-    };
-    StartComponent.prototype.storeUsername = function () {
-        this.cookieService.put("ATVQ_USERNAME", this.playerName);
     };
     StartComponent = __decorate([
         core_1.Component({
             selector: 'my-start',
             templateUrl: 'app/templates/start.component.html',
-            providers: [core_2.CookieService]
+            providers: [core_2.CookieService, userdata_service_1.UserDataService]
         }), 
-        __metadata('design:paramtypes', [router_1.Router, core_2.CookieService])
+        __metadata('design:paramtypes', [router_1.Router, userdata_service_1.UserDataService])
     ], StartComponent);
     return StartComponent;
 }());

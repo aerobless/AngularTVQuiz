@@ -1,22 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {CookieService} from 'angular2-cookie/core';
+import { CookieService } from 'angular2-cookie/core';
+import { UserDataService } from './services/userdata.service';
 
 @Component({
     selector: 'my-start',
     templateUrl: 'app/templates/start.component.html',
-    providers: [CookieService]
+    providers: [CookieService, UserDataService]
 })
 export class StartComponent implements OnInit{
     quizId: string;
     playerName: string;
 
-    constructor(private router: Router, private cookieService:CookieService) {
+    constructor(private router: Router, private userDataService: UserDataService) {
     }
 
     ngOnInit() {
         this.quizId = this.makeId(5);
-        this.playerName = this.cookieService.get("ATVQ_USERNAME");
+        this.playerName = this.userDataService.getUsername();
     }
 
     makeId(idLength: number){
@@ -30,13 +31,9 @@ export class StartComponent implements OnInit{
     }
 
     startQuiz(){
-        this.storeUsername();
+        this.userDataService.setUsername(this.playerName);
         let link = ['/quiz', this.quizId];
         this.router.navigate(link);
-    }
-
-    storeUsername(){
-        this.cookieService.put("ATVQ_USERNAME", this.playerName);
     }
 
 }

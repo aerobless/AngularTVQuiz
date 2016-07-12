@@ -1,12 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { UserDataService } from './services/userdata.service';
 import { Question } from './question';
 import { Answer } from './answer';
-import { QuestionService } from './question.service';
+import { QuestionService } from './services/question.service';
 
 @Component({
   selector: 'my-quiz',
-  templateUrl: 'app/templates/quiz.component.html'
+  templateUrl: 'app/templates/quiz.component.html',
+  providers: [QuestionService]
 })
 
 export class QuizComponent implements OnInit, OnDestroy {
@@ -18,9 +20,10 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   socket = null;
   sub: any;
-  id: string;
+  quizId: string;
+  playerName: string;
 
-  constructor(private questionService: QuestionService, private route: ActivatedRoute){
+  constructor(private questionService: QuestionService, private route: ActivatedRoute, private userDataService:UserDataService){
     this.socket = io('http://localhost:8000');
     this.socket.on('greetings', function(message, id){
       console.log( 'Got a message from the server: "' + message + "', my ID is: " + id );
@@ -29,9 +32,11 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      this.id = params['id'];
+      this.quizId = params['id'];
     });
     this.getQuestions();
+    this.playerName = this.userDataService.getUsername();
+    //TODO: check if playerName is empty, if so navigate back to start
   }
 
   ngOnDestroy() {

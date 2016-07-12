@@ -9,23 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
 var core_2 = require('angular2-cookie/core');
-var userdata_service_1 = require('./services/userdata.service');
-var AppComponent = (function () {
-    function AppComponent() {
-        this.title = 'AngularTVQuiz';
+var UserDataService = (function () {
+    function UserDataService(cookieService) {
+        this.cookieService = cookieService;
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'my-app',
-            template: "\n    <h1>{{title}}</h1>\n    <nav>\n        <a [routerLink]=\"['/start']\">Restart</a>\n    </nav>\n    <router-outlet></router-outlet>\n  ",
-            directives: [router_1.ROUTER_DIRECTIVES],
-            providers: [core_2.CookieService, userdata_service_1.UserDataService]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    UserDataService.prototype.getUsername = function () {
+        return this.cookieService.get(UserDataService.USERNAME);
+    };
+    //TODO: validation & throw exception if bad?
+    UserDataService.prototype.setUsername = function (username) {
+        this.cookieService.put(UserDataService.USERNAME, username);
+    };
+    UserDataService.PREFIX = "AngularTVQuiz_";
+    UserDataService.USERNAME = UserDataService.PREFIX + "Username";
+    UserDataService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [core_2.CookieService])
+    ], UserDataService);
+    return UserDataService;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.UserDataService = UserDataService;
+//# sourceMappingURL=userdata.service.js.map

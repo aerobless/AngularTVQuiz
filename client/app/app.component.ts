@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-import { QuestionService } from './question.service';
+import { CookieService } from 'angular2-cookie/core';
+import { UserDataService } from './services/userdata.service';
 
 @Component({
     selector: 'my-app',
@@ -12,9 +13,7 @@ import { QuestionService } from './question.service';
     <router-outlet></router-outlet>
   `,
     directives: [ROUTER_DIRECTIVES],
-    providers: [
-        QuestionService
-    ]
+    providers: [CookieService, UserDataService]
 })
 export class AppComponent {
     title = 'AngularTVQuiz';
