@@ -1,0 +1,11 @@
+<h4>Quiz ID: {{quizId}}</h4>
+<div class="center">
+    <h2>Question: {{currentQuestion.text}}</h2>
+    <ul>
+        <div *ngFor="let answer of currentQuestion.answers" (click)="onSelect(answer)">
+            <div id="first" class="divSquare">
+                <h1>{{answer.text}}</h1>
+            </div>
+        </div>
+    </ul>
+</div>

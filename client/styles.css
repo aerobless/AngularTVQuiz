@@ -7,6 +7,25 @@ body {
   margin: 2em;
 }
 
+.center {
+  margin: auto;
+  width: 80%;
+  padding: 10px;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.divSquare{
+  width:48%;
+  height:200px;
+  margin:4px;
+  border:1px solid black;
+  float: left;
+  text-align: center;
+}
+
  /*
   * See https://github.com/angular/angular.io/blob/master/public/docs/_examples/styles.css
   * for the full set of master styles used by the documentation samples

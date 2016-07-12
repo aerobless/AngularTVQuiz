@@ -37,6 +37,7 @@ function serveIndex(req, res) {
 
 //All angular2 routes should be added here to pass them through
 app.get('/quiz/*', serveIndex);
+app.get('/tv/*', serveIndex);
 app.get('/start', serveIndex);
 
 //Express Node.JS Routes

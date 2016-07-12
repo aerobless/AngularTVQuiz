@@ -8,7 +8,7 @@ import { UserDataService } from './services/userdata.service';
     template: `
     <h1>{{title}}</h1>
     <nav>
-        <a [routerLink]="['/start']">Restart</a>
+        <a [routerLink]="['/start']">Reset</a> <!--TODO: remove once possible-->
     </nav>
     <router-outlet></router-outlet>
   `,
