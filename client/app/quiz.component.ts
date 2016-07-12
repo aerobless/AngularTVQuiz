@@ -5,7 +5,7 @@ import { Answer } from './answer';
 import { QuestionService } from './question.service';
 
 @Component({
-  selector: 'my-app',
+  selector: 'my-quiz',
   template: `
     <h1>{{title}}</h1>
     <h2>Question: {{currentQuestion.text}}</h2>
@@ -23,11 +23,10 @@ import { QuestionService } from './question.service';
       <button type="button" class="btn btn-primary" (click)="messageTest()">
         Message test
       </button>
-    `,
-  providers: [QuestionService]
+    `
 })
 
-export class AppComponent implements OnInit {
+export class QuizComponent implements OnInit {
   title = 'Angular TV Quiz'
   questions: Question[];
   currentQuestion: Question;

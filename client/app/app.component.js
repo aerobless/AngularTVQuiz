@@ -18,7 +18,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "\n    <h1>{{title}}</h1>\n    <h2>test</h2>\n    <my-quiz></my-quiz>\n  ",
+            template: "\n    <h1>{{title}}</h1>\n    <my-quiz></my-quiz>\n  ",
             directives: [quiz_component_1.QuizComponent],
             providers: [
                 question_service_1.QuestionService
