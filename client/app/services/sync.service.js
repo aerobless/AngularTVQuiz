@@ -11,7 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var SyncService = (function () {
     function SyncService() {
+        this.socket = io('http://localhost:8000');
     }
+    SyncService.prototype.ngOnInit = function () {
+    };
+    SyncService.prototype.requestQuestion = function () {
+        this.socket.on('greetings', function (message, id) {
+            console.log('Got a message from the server: "' + message + "', my ID is: " + id);
+        }.bind(this));
+        this.socket.on("connect", function () {
+            console.log("Connected!");
+        });
+    };
     SyncService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])
