@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Question } from './question';
 import { Answer } from './answer';
 import { QuestionService } from './question.service';
@@ -9,7 +9,7 @@ import { QuestionService } from './question.service';
   templateUrl: 'app/templates/quiz.component.html'
 })
 
-export class QuizComponent implements OnInit {
+export class QuizComponent implements OnInit, OnDestroy {
   title = 'Angular TV Quiz'
   questions: Question[];
   currentQuestion: Question;
@@ -17,8 +17,10 @@ export class QuizComponent implements OnInit {
   selectedAnswer: Answer;
 
   socket = null;
+  sub: any;
+  id: string;
 
-  constructor(private questionService: QuestionService){
+  constructor(private questionService: QuestionService, private route: ActivatedRoute){
     this.socket = io('http://localhost:8000');
     this.socket.on('greetings', function(message, id){
       console.log( 'Got a message from the server: "' + message + "', my ID is: " + id );
@@ -26,7 +28,14 @@ export class QuizComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.sub = this.route.params.subscribe(params => {
+      this.id = params['id'];
+    });
     this.getQuestions();
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   getQuestions(){

@@ -9,15 +9,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
+var core_2 = require('angular2-cookie/core');
 var StartComponent = (function () {
-    function StartComponent() {
+    function StartComponent(router, cookieService) {
+        this.router = router;
+        this.cookieService = cookieService;
     }
+    StartComponent.prototype.ngOnInit = function () {
+        this.quizId = this.makeId(5);
+        this.playerName = this.cookieService.get("ATVQ_USERNAME");
+    };
+    StartComponent.prototype.makeId = function (idLength) {
+        var randomId = "";
+        var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+        for (var i = 0; i < idLength; i++)
+            randomId += possible.charAt(Math.floor(Math.random() * possible.length));
+        return randomId;
+    };
+    StartComponent.prototype.startQuiz = function () {
+        this.storeUsername();
+        var link = ['/quiz', this.quizId];
+        this.router.navigate(link);
+    };
+    StartComponent.prototype.storeUsername = function () {
+        this.cookieService.put("ATVQ_USERNAME", this.playerName);
+    };
     StartComponent = __decorate([
         core_1.Component({
             selector: 'my-start',
-            templateUrl: 'app/templates/start.component.html'
+            templateUrl: 'app/templates/start.component.html',
+            providers: [core_2.CookieService]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [router_1.Router, core_2.CookieService])
     ], StartComponent);
     return StartComponent;
 }());

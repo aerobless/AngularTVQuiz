@@ -4,7 +4,7 @@ var quiz_component_1 = require('./quiz.component');
 var start_component_1 = require('./start.component');
 var routes = [
     {
-        path: 'quiz',
+        path: 'quiz/:id',
         component: quiz_component_1.QuizComponent
     },
     {

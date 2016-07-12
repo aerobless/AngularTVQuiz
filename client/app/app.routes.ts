@@ -4,7 +4,7 @@ import { StartComponent } from './start.component';
 
 const routes: RouterConfig = [
     {
-        path: 'quiz',
+        path: 'quiz/:id',
         component: QuizComponent
     },
     {

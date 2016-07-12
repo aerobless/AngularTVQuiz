@@ -7,8 +7,7 @@ import { QuestionService } from './question.service';
     template: `
     <h1>{{title}}</h1>
     <nav>
-        <a [routerLink]="['/quiz']">Quiz</a>
-        <a [routerLink]="['/start']">Start</a>
+        <a [routerLink]="['/start']">Restart</a>
     </nav>
     <router-outlet></router-outlet>
   `,
@@ -18,5 +17,5 @@ import { QuestionService } from './question.service';
     ]
 })
 export class AppComponent {
-    title = 'Angular Quiz Start Screen';
+    title = 'AngularTVQuiz';
 }

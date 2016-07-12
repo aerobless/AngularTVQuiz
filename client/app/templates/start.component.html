@@ -1,2 +1,17 @@
-<h3>Start Screen (todo username)</h3>
-<h2>hello world</h2>
+
+<h5>TV URL: http://localhost:9999/tv/{{quizId}}</h5>
+<h5>JOIN URL: http://localhost:9999/start/{{quizId}}</h5>
+<p>Accept a random quiz id or chose one yourself.</p>
+<div class="input-group">
+    <span class="input-group-addon">Quiz ID</span>
+    <input type="text" [(ngModel)]="quizId" class="form-control" aria-describedby="basic-addon1">
+</div>
+<br> <!--TODO: Remove br and use proper grid -->
+<div class="input-group">
+    <span class="input-group-addon">Your name</span>
+    <input type="text" [(ngModel)]="playerName" class="form-control" aria-describedby="basic-addon1">
+</div>
+<br> <!--TODO: Remove br and use proper grid -->
+<button type="button" class="btn btn-primary" (click)="startQuiz()">
+    Play
+</button>
