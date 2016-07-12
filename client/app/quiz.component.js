@@ -53,7 +53,7 @@ var QuizComponent = (function () {
     QuizComponent = __decorate([
         core_1.Component({
             selector: 'my-quiz',
-            template: "\n    <h1>{{title}}</h1>\n    <h2>Question: {{currentQuestion.text}}</h2>\n      <h3>Select the correct answer</h3>\n      <ul>\n        <li *ngFor=\"let answer of currentQuestion.answers\" (click)=\"onSelect(answer)\">\n            <span>{{answer.text}}</span><span *ngIf=\"answer==selectedAnswer\"> (selected)</span>\n        </li>\n      </ul>\n      \n      <button type=\"button\" class=\"btn btn-primary\" (click)=\"checkAnswer()\">\n        Check\n      </button>\n      \n      <button type=\"button\" class=\"btn btn-primary\" (click)=\"messageTest()\">\n        Message test\n      </button>\n    "
+            templateUrl: 'app/templates/quiz.component.html'
         }), 
         __metadata('design:paramtypes', [question_service_1.QuestionService])
     ], QuizComponent);

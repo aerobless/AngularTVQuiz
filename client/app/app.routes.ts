@@ -13,9 +13,9 @@ const routes: RouterConfig = [
     },
     {
         path: '',
-        redirectTo: '/start',
+        redirectTo: 'start',
         pathMatch: 'full'
-    },
+    }
 ];
 
 export const appRouterProviders = [

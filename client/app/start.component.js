@@ -15,7 +15,7 @@ var StartComponent = (function () {
     StartComponent = __decorate([
         core_1.Component({
             selector: 'my-start',
-            template: '<h3>Start Screen (todo username)</h3>'
+            templateUrl: 'app/templates/start.component.html'
         }), 
         __metadata('design:paramtypes', [])
     ], StartComponent);

@@ -31,6 +31,14 @@ app.use(bodyParser.urlencoded({extended: true}) );
 
 app.use( express.static(__dirname + '/client' ) );
 
-//Routes
+function serveIndex(req, res) {
+    return res.sendFile(__dirname + '/client/');
+}
+
+//All angular2 routes should be added here to pass them through
+app.get('/quiz', serveIndex);
+app.get('/start', serveIndex);
+
+//Express Node.JS Routes
 var Routes = require('./routes.js');
 var r = new Routes(app, io);

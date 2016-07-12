@@ -6,24 +6,7 @@ import { QuestionService } from './question.service';
 
 @Component({
   selector: 'my-quiz',
-  template: `
-    <h1>{{title}}</h1>
-    <h2>Question: {{currentQuestion.text}}</h2>
-      <h3>Select the correct answer</h3>
-      <ul>
-        <li *ngFor="let answer of currentQuestion.answers" (click)="onSelect(answer)">
-            <span>{{answer.text}}</span><span *ngIf="answer==selectedAnswer"> (selected)</span>
-        </li>
-      </ul>
-      
-      <button type="button" class="btn btn-primary" (click)="checkAnswer()">
-        Check
-      </button>
-      
-      <button type="button" class="btn btn-primary" (click)="messageTest()">
-        Message test
-      </button>
-    `
+  templateUrl: 'app/templates/quiz.component.html'
 })
 
 export class QuizComponent implements OnInit {

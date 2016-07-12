@@ -13,9 +13,9 @@ var routes = [
     },
     {
         path: '',
-        redirectTo: '/start',
+        redirectTo: 'start',
         pathMatch: 'full'
-    },
+    }
 ];
 exports.appRouterProviders = [
     router_1.provideRouter(routes)
