@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { QuizComponent } from './quiz.component';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 import { QuestionService } from './question.service';
 
 @Component({
     selector: 'my-app',
     template: `
     <h1>{{title}}</h1>
-    <my-quiz></my-quiz>
+    <a [routerLink]="['/quiz']">Quiz</a>
+    <router-outlet></router-outlet>
   `,
-    directives: [QuizComponent],
+    directives: [ROUTER_DIRECTIVES],
     providers: [
         QuestionService
     ]

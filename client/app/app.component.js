@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var quiz_component_1 = require('./quiz.component');
+var router_1 = require('@angular/router');
 var question_service_1 = require('./question.service');
 var AppComponent = (function () {
     function AppComponent() {
@@ -18,8 +18,8 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "\n    <h1>{{title}}</h1>\n    <my-quiz></my-quiz>\n  ",
-            directives: [quiz_component_1.QuizComponent],
+            template: "\n    <h1>{{title}}</h1>\n    <a [routerLink]=\"['/quiz']\">Quiz</a>\n    <router-outlet></router-outlet>\n  ",
+            directives: [router_1.ROUTER_DIRECTIVES],
             providers: [
                 question_service_1.QuestionService
             ]
