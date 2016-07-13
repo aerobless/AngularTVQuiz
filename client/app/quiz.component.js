@@ -29,12 +29,12 @@ var QuizComponent = (function () {
         //TODO: check if playerName is empty, if so navigate back to start
         this.currentQuestion = new question_1.Question();
         this.socket.on('questionResponse', function (message, quizId) {
-            console.log('Got a message from the server: "' + message);
+            console.log('Got a message from the server: "' + message.text);
             if (this.quizId == quizId) {
                 this.currentQuestion = message;
             }
         }.bind(this));
-        this.socket.emit('questionRequest', this.quizId); //TODO: request differently
+        this.socket.emit('registerPlayerRequest', this.quizId, this.playerName);
     };
     QuizComponent.prototype.ngOnDestroy = function () {
         this.sub.unsubscribe();

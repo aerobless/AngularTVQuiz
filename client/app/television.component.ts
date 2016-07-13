@@ -44,7 +44,7 @@ export class TelevisionComponent implements OnInit, OnDestroy {
             }
         }.bind(this));
 
-        this.socket.emit( 'questionRequest', this.quizId); //TODO: request differently
+        this.socket.emit('registerPlayerRequest',this.quizId, 'tv');
     }
 
     ngOnDestroy() {

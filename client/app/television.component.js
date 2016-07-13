@@ -38,7 +38,7 @@ var TelevisionComponent = (function () {
                 this.currentQuestion = message;
             }
         }.bind(this));
-        this.socket.emit('questionRequest', this.quizId); //TODO: request differently
+        this.socket.emit('registerPlayerRequest', this.quizId, 'tv');
     };
     TelevisionComponent.prototype.ngOnDestroy = function () {
         this.sub.unsubscribe();

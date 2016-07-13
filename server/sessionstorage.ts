@@ -12,8 +12,19 @@ export class SessionStorage {
 
         this.sessions.push({quizId: quizId, currentQuestion: question, currentQuestionId: 0, players: undefined});
     }
-    
+
     getQuestion(quizId:string){
+        for(let session of this.sessions){
+            if(session.quizId == quizId){
+                return session.currentQuestion;
+            }
+        }
+        let session:Session = {quizId: quizId, currentQuestion: QUESTIONS[0], currentQuestionId: 0, players: undefined};
+        this.sessions.push(session);
+        return session.currentQuestion;
+    }
+    
+    getNextQuestion(quizId:string){
         for(let session of this.sessions){
             if(session.quizId == quizId){
                 this.nextQuestion(quizId);
@@ -25,11 +36,10 @@ export class SessionStorage {
         return session.currentQuestion;
     }
 
-    nextQuestion(quizId:string){
+    private nextQuestion(quizId:string){
         for(let session of this.sessions){
             if(session.quizId == quizId){
                 session.currentQuestionId = session.currentQuestionId+1;
-                console.log("exists"+session.currentQuestionId);
                 if(session.currentQuestionId==QUESTIONS.length){
                     session.currentQuestionId = 0;
                 }

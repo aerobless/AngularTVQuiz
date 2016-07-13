@@ -14,6 +14,16 @@ class SessionStorage {
     getQuestion(quizId) {
         for (let session of this.sessions) {
             if (session.quizId == quizId) {
+                return session.currentQuestion;
+            }
+        }
+        let session = { quizId: quizId, currentQuestion: QUESTIONS[0], currentQuestionId: 0, players: undefined };
+        this.sessions.push(session);
+        return session.currentQuestion;
+    }
+    getNextQuestion(quizId) {
+        for (let session of this.sessions) {
+            if (session.quizId == quizId) {
                 this.nextQuestion(quizId);
                 return session.currentQuestion;
             }
@@ -26,7 +36,6 @@ class SessionStorage {
         for (let session of this.sessions) {
             if (session.quizId == quizId) {
                 session.currentQuestionId = session.currentQuestionId + 1;
-                console.log("exists" + session.currentQuestionId);
                 if (session.currentQuestionId == QUESTIONS.length) {
                     session.currentQuestionId = 0;
                 }

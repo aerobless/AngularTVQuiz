@@ -15,6 +15,13 @@ io.on('connection', function(socket){
 
     socket.on( 'questionRequest', function( quizId ){ //TODO: define contract
         
+        let question = sessionStorage.getNextQuestion(quizId);
+
+        socket.broadcast.emit( 'questionResponse', question, quizId);
+        socket.emit( 'questionResponse', question, quizId);
+    });
+
+    socket.on( 'registerPlayerRequest', function( quizId ){ //TODO: define contract
         let question = sessionStorage.getQuestion(quizId);
 
         socket.broadcast.emit( 'questionResponse', question, quizId);
