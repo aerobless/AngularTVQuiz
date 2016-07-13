@@ -18,6 +18,7 @@ var TelevisionComponent = (function () {
         this.userDataService = userDataService;
         this.title = 'Angular TV Quiz';
         this.currentQuestionId = 0;
+        this.solutionActive = false;
         this.socket = null;
         this.socket = io('http://localhost:8000');
         this.socket.on('greetings', function (message, id) {
@@ -36,6 +37,14 @@ var TelevisionComponent = (function () {
             console.log('Got a message from the server: "' + message);
             if (this.quizId == quizId) {
                 this.currentQuestion = message;
+                this.solutionActive = false;
+            }
+        }.bind(this));
+        this.socket.on('solutionResponse', function (message, quizId) {
+            console.log('Got a message from the server: "' + message);
+            if (this.quizId == quizId) {
+                this.currentQuestion = message;
+                this.solutionActive = true;
             }
         }.bind(this));
         this.socket.emit('registerPlayerRequest', this.quizId, 'tv');

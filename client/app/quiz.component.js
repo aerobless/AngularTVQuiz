@@ -42,18 +42,20 @@ var QuizComponent = (function () {
     QuizComponent.prototype.getMessageFromServer = function () {
         this.socket.emit('questionRequest', this.quizId);
     };
-    QuizComponent.prototype.onSelect = function (answer) { this.selectedAnswer = answer; };
+    QuizComponent.prototype.onSelect = function (answer) {
+        this.selectedAnswer = answer;
+        this.socket.emit('solutionRequest', this.quizId, answer.id, this.playerName);
+    };
     QuizComponent.prototype.checkAnswer = function () {
-        if (this.selectedAnswer != null && this.selectedAnswer.correct) {
-            alert("Correct!");
-            this.getMessageFromServer();
-        }
-        else if (this.selectedAnswer != null && !this.selectedAnswer.correct) {
-            alert("Wrong..");
-        }
-        else {
-            alert("Please select an answer first..");
-        }
+        this.socket.emit('checkRequest', this.quizId);
+        /*if(this.selectedAnswer != null && this.selectedAnswer.correct){
+          alert("Correct!");
+          this.getMessageFromServer();
+        }else if(this.selectedAnswer != null && !this.selectedAnswer.correct){
+          alert("Wrong..");
+        }else{
+          alert("Please select an answer first..");
+        }*/
     };
     QuizComponent = __decorate([
         core_1.Component({

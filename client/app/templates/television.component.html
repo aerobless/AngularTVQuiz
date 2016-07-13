@@ -1,11 +1,25 @@
 <h4>Quiz ID: {{quizId}}</h4>
 <div class="center">
     <h2>Question: {{currentQuestion.text}}</h2>
-    <ul>
-        <div *ngFor="let answer of currentQuestion.answers" (click)="onSelect(answer)">
-            <div id="first" class="divSquare">
-                <h1>{{answer.text}}</h1>
+    <div *ngIf="!solutionActive">
+        <ul>
+            <div *ngFor="let answer of currentQuestion.answers" (click)="onSelect(answer)">
+                <div class="divSquare">
+                    <h1>{{answer.text}}</h1>
+                </div>
             </div>
-        </div>
-    </ul>
+        </ul>
+    </div>
+    <div *ngIf="solutionActive">
+        <ul>
+            <div *ngFor="let answer of currentQuestion.answers" (click)="onSelect(answer)">
+                <div class="divSquare" *ngIf="!answer.correct">
+                    <h1>{{answer.text}}</h1>
+                </div>
+                <div class="divSquare correctAnswer" *ngIf="answer.correct">
+                    <h1>✓ {{answer.text}}</h1>
+                </div>
+            </div>
+        </ul>
+    </div>
 </div>

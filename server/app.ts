@@ -28,6 +28,18 @@ io.on('connection', function(socket){
         socket.emit( 'questionResponse', question, quizId);
     });
 
+    socket.on( 'solutionRequest', function( quizId, answerId, playerName ){ //TODO: define contract
+        sessionStorage.setAnswer(quizId, answerId, playerName);
+        console.log(playerName+" registered answer "+answerId+" for quiz "+quizId);
+    });
+
+    socket.on( 'checkRequest', function( quizId){ //TODO: define contract
+        let question = sessionStorage.getQuestion(quizId);
+        console.log("got check request");
+        socket.broadcast.emit( 'solutionResponse', question, quizId);
+        socket.emit( 'solutionResponse', question, quizId);
+    });
+
 });
 
 http.listen(8000, function(){

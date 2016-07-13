@@ -20,6 +20,16 @@ io.on('connection', function (socket) {
         socket.broadcast.emit('questionResponse', question, quizId);
         socket.emit('questionResponse', question, quizId);
     });
+    socket.on('solutionRequest', function (quizId, answerId, playerName) {
+        sessionStorage.setAnswer(quizId, answerId, playerName);
+        console.log(playerName + " registered answer " + answerId + " for quiz " + quizId);
+    });
+    socket.on('checkRequest', function (quizId) {
+        let question = sessionStorage.getQuestion(quizId);
+        console.log("got check request");
+        socket.broadcast.emit('solutionResponse', question, quizId);
+        socket.emit('solutionResponse', question, quizId);
+    });
 });
 http.listen(8000, function () {
     console.log('listening on *:8000');

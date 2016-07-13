@@ -15,6 +15,7 @@ export class TelevisionComponent implements OnInit, OnDestroy {
     currentQuestion: Question;
     currentQuestionId = 0;
     selectedAnswer: Answer;
+    solutionActive: boolean = false;
 
     socket = null;
     sub: any;
@@ -41,6 +42,15 @@ export class TelevisionComponent implements OnInit, OnDestroy {
             console.log( 'Got a message from the server: "' + message );
             if(this.quizId == quizId){
                 this.currentQuestion = message;
+                this.solutionActive = false;
+            }
+        }.bind(this));
+
+        this.socket.on('solutionResponse', function(message, quizId){
+            console.log( 'Got a message from the server: "' + message );
+            if(this.quizId == quizId){
+                this.currentQuestion = message;
+                this.solutionActive = true;
             }
         }.bind(this));
 
