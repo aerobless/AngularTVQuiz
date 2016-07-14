@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserDataService } from './services/userdata.service';
 import { Question } from './question';
 import { Answer } from './answer';
-import {ApplicationConfig} from "./applicationconfig";
+import applicationConfig = require("./applicationconfig");
 
 @Component({
     selector: 'my-quiz',
@@ -23,7 +23,7 @@ export class TelevisionComponent implements OnInit, OnDestroy {
     playerName: string;
 
     constructor(private route: ActivatedRoute, private userDataService:UserDataService){
-        this.socket = io(ApplicationConfig.SERVER_URL+":"+ApplicationConfig.SOCKET_CONNECTION_PORT);
+        this.socket = io(applicationConfig.SERVER_URL+":"+applicationConfig.SOCKET_CONNECTION_PORT);
         this.socket.on('greetings', function(message, id){
             console.log( 'Got a message from the server: "' + message + "', my ID is: " + id );
         }.bind(this));

@@ -12,10 +12,14 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var core_2 = require('angular2-cookie/core');
 var userdata_service_1 = require('./services/userdata.service');
+var applicationConfig = require("./applicationconfig");
 var StartComponent = (function () {
     function StartComponent(router, userDataService) {
         this.router = router;
         this.userDataService = userDataService;
+        this.SERVER_URL = applicationConfig.SERVER_URL;
+        this.HTTP_PORT = applicationConfig.HTTP_PORT;
+        this.SOCKET_CONNECTION_PORT = applicationConfig.SOCKET_CONNECTION_PORT;
     }
     StartComponent.prototype.ngOnInit = function () {
         this.quizId = this.makeId(5);

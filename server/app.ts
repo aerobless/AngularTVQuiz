@@ -1,6 +1,6 @@
 /// <reference path="../typings/index.d.ts" />
 import {SessionStorage} from "./sessionstorage";
-import {ApplicationConfig} from "../client/app/applicationconfig";
+import applicationConfig = require("../client/app/applicationconfig");
 
 var express = require('express');
 var app = express();
@@ -45,12 +45,12 @@ io.on('connection', function(socket){
 
 //Connections setup
 //Can be configured in /client/app/applicationconfig.ts
-http.listen(ApplicationConfig.SOCKET_CONNECTION_PORT, function(){
-    console.log('Socket server connected. Listening on port: '+ApplicationConfig.SOCKET_CONNECTION_PORT);
+http.listen(applicationConfig.SOCKET_CONNECTION_PORT, function(){
+    console.log('Socket server connected. Listening on port: '+applicationConfig.SOCKET_CONNECTION_PORT);
 });
 var io = require('socket.io')(server,{log:false});
-server.listen(ApplicationConfig.HTTP_PORT,function(){
-    console.log('HTTP server connected. Listening on port: '+ApplicationConfig.HTTP_PORT);
+server.listen(applicationConfig.HTTP_PORT,function(){
+    console.log('HTTP server connected. Listening on port: '+applicationConfig.HTTP_PORT);
 });
 
 //session init

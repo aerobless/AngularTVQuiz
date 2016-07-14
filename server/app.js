@@ -1,6 +1,6 @@
 "use strict";
 const sessionstorage_1 = require("./sessionstorage");
-const applicationconfig_1 = require("../client/app/applicationconfig");
+const applicationConfig = require("../client/app/applicationconfig");
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
@@ -32,12 +32,12 @@ io.on('connection', function (socket) {
         socket.emit('solutionResponse', question, quizId);
     });
 });
-http.listen(applicationconfig_1.ApplicationConfig.SOCKET_CONNECTION_PORT, function () {
-    console.log('Socket server connected. Listening on port: ' + applicationconfig_1.ApplicationConfig.SOCKET_CONNECTION_PORT);
+http.listen(applicationConfig.SOCKET_CONNECTION_PORT, function () {
+    console.log('Socket server connected. Listening on port: ' + applicationConfig.SOCKET_CONNECTION_PORT);
 });
 var io = require('socket.io')(server, { log: false });
-server.listen(applicationconfig_1.ApplicationConfig.HTTP_PORT, function () {
-    console.log('HTTP server connected. Listening on port: ' + applicationconfig_1.ApplicationConfig.HTTP_PORT);
+server.listen(applicationConfig.HTTP_PORT, function () {
+    console.log('HTTP server connected. Listening on port: ' + applicationConfig.HTTP_PORT);
 });
 app.use(session({
     secret: 'can',

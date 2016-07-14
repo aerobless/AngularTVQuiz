@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'angular2-cookie/core';
 import { UserDataService } from './services/userdata.service';
+import applicationConfig = require("./applicationconfig");
 
 @Component({
     selector: 'my-start',
@@ -11,6 +12,9 @@ import { UserDataService } from './services/userdata.service';
 export class StartComponent implements OnInit{
     quizId: string;
     playerName: string;
+    SERVER_URL: string = applicationConfig.SERVER_URL;
+    HTTP_PORT: string = applicationConfig.HTTP_PORT;
+    SOCKET_CONNECTION_PORT: string = applicationConfig.SOCKET_CONNECTION_PORT;
 
     constructor(private router: Router, private userDataService: UserDataService) {
     }
