@@ -27,6 +27,7 @@ var QuizComponent = (function () {
         var _this = this;
         this.sub = this.route.params.subscribe(function (params) {
             _this.quizId = params['id'];
+            _this.userDataService.setQuizId(_this.quizId);
         });
         this.playerName = this.userDataService.getUsername();
         this.currentQuestion = new question_1.Question();

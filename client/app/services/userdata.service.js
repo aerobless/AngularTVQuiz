@@ -10,9 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var core_2 = require('angular2-cookie/core');
+var Rx_1 = require("rxjs/Rx");
 var UserDataService = (function () {
     function UserDataService(cookieService) {
         this.cookieService = cookieService;
+        this.quizId = new Rx_1.Subject();
     }
     UserDataService.prototype.getUsername = function () {
         return this.cookieService.get(UserDataService.USERNAME);
@@ -20,6 +22,13 @@ var UserDataService = (function () {
     //TODO: validation & throw exception if bad?
     UserDataService.prototype.setUsername = function (username) {
         this.cookieService.put(UserDataService.USERNAME, username);
+    };
+    UserDataService.prototype.getQuizId = function () {
+        return this.quizId.asObservable();
+    };
+    UserDataService.prototype.setQuizId = function (quizId) {
+        console.log("set " + quizId);
+        this.quizId.next(quizId);
     };
     UserDataService.PREFIX = "AngularTVQuiz_";
     UserDataService.USERNAME = UserDataService.PREFIX + "Username";

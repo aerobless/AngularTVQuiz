@@ -29,6 +29,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.quizId = params['id'];
+      this.userDataService.setQuizId(this.quizId);
     });
     this.playerName = this.userDataService.getUsername();
     this.currentQuestion = new Question();

@@ -13,19 +13,25 @@ var router_1 = require('@angular/router');
 var core_2 = require('angular2-cookie/core');
 var userdata_service_1 = require('./services/userdata.service');
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(userDataService) {
+        this.userDataService = userDataService;
         this.title = 'Angular TV Quiz';
+        this.quizId = 'unkown';
     }
     AppComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.userDataService.getQuizId().subscribe(function (quizId) {
+            _this.quizId = quizId;
+        });
     };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "\n    <h1>{{title}}</h1>\n    <!--<nav>\n        <a [routerLink]=\"['/start']\">Reset</a>\n    </nav>-->\n    <router-outlet></router-outlet>\n  ",
+            templateUrl: 'app/templates/app.component.html',
             directives: [router_1.ROUTER_DIRECTIVES],
             providers: [core_2.CookieService, userdata_service_1.UserDataService]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [userdata_service_1.UserDataService])
     ], AppComponent);
     return AppComponent;
 }());

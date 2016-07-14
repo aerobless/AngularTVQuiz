@@ -1,0 +1,19 @@
+<div class="navbar navbar-primary">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a href="/"class="navbar-brand">{{title}}</a>
+        </div>
+        <div class="navbar-collapse collapse navbar-warning-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a>Quiz ID: {{quizId}}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--<h1>{{title}}</h1>-->
+<!--<nav>
+    <a [routerLink]="['/start']">Reset</a>
+</nav>-->
+<div class="appBody">
+    <router-outlet></router-outlet>
+</div>
