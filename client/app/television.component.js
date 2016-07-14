@@ -20,7 +20,7 @@ var TelevisionComponent = (function () {
         this.currentQuestionId = 0;
         this.solutionActive = false;
         this.socket = null;
-        this.socket = io('http://localhost:8000');
+        this.socket = io('http://10.88.234.136:9998');
         this.socket.on('greetings', function (message, id) {
             console.log('Got a message from the server: "' + message + "', my ID is: " + id);
         }.bind(this));

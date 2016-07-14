@@ -26,9 +26,22 @@ body {
   text-align: center;
 }
 
+.solutionButton{
+  width:45%;
+  height:100px;
+  margin:4px;
+  border:2px solid black;
+  float: left;
+  text-align: center;
+}
+
 .correctAnswer{
   border-color: #00DD00;
   background-color: #d6e9c6;
+}
+
+.mobileControls{
+  float: none;
 }
 
  /*

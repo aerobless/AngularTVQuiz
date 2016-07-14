@@ -15,7 +15,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   currentQuestionId = 0;
   selectedAnswer: Answer;
 
-  socket = io('http://localhost:8000');
+  socket = io('http://10.88.234.136:9998');
 
   sub: any;
   quizId: string;

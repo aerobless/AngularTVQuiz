@@ -19,7 +19,7 @@ var QuizComponent = (function () {
         this.router = router;
         this.title = 'Angular TV Quiz';
         this.currentQuestionId = 0;
-        this.socket = io('http://localhost:8000');
+        this.socket = io('http://10.88.234.136:9998');
     }
     QuizComponent.prototype.ngOnInit = function () {
         var _this = this;

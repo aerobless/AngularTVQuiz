@@ -31,7 +31,7 @@ io.on('connection', function (socket) {
         socket.emit('solutionResponse', question, quizId);
     });
 });
-http.listen(8000, function () {
+http.listen(9998, function () {
     console.log('listening on *:8000');
 });
 var io = require('socket.io')(server, { log: false });
