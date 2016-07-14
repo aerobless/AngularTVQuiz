@@ -50,7 +50,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         }
       }.bind(this));
 
-      this.socket.emit('registerPlayerRequest',this.quizId, this.playerName);
+      this.socket.emit('questionRequest',this.quizId, false);
     }else{
       //Navigate back to start if no username was registered
       let link = ['/start'];
@@ -63,19 +63,11 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   getMessageFromServer(){
-    this.socket.emit( 'questionRequest', this.quizId);
+    this.socket.emit( 'questionRequest', this.quizId, true);
   }
 
   onSelect(answer: Answer) {
     this.selectedAnswer = answer;
     this.socket.emit('solutionRequest', this.quizId, answer.id, this.playerName)
-  }
-
-  checkAnswer(){
-    if(this.selectedAnswer == null){
-      alert("Please select an answer first..");
-    } else {
-      this.socket.emit( 'checkRequest', this.quizId);
-    }
   }
 }

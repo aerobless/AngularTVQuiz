@@ -10,7 +10,7 @@ export class SessionStorage {
                 return session.currentQuestion;
             }
         }
-        let session:Session = {quizId: quizId, currentQuestion: QUESTIONS[0], currentQuestionId: 0, players: []};
+        let session:Session = {quizId: quizId, currentQuestion: QUESTIONS[0], currentQuestionId: 0, players: [], interval: null};
         this.sessions.push(session);
         return session.currentQuestion;
     }
@@ -22,7 +22,7 @@ export class SessionStorage {
                 return session.currentQuestion;
             }
         }
-        let session:Session = {quizId: quizId, currentQuestion: QUESTIONS[0], currentQuestionId: 0, players: []};
+        let session:Session = {quizId: quizId, currentQuestion: QUESTIONS[0], currentQuestionId: 0, players: [], interval: null};
         this.sessions.push(session);
         return session.currentQuestion;
     }
@@ -63,12 +63,31 @@ export class SessionStorage {
                 }
                 //Set new answers
                 for(let player of session.players){
-                    if(session.currentQuestion.answers[player.answer].correct){
-                        player.points += 10;
+                    if(player.answer != null){
+                        if(session.currentQuestion.answers[player.answer].correct){
+                            player.points += 10;
+                        }
+                        session.currentQuestion.answers[player.answer].players.push(player.name + " ("+player.points+")");
                     }
-                    session.currentQuestion.answers[player.answer].players.push(player.name + " ("+player.points+")");
+                    player.answer = null;
                 }
                 return session.currentQuestion;
+            }
+        }
+    }
+
+    setInterval(quizId:string, interval){
+        for(let session of this.sessions){
+            if(session.quizId == quizId){
+                session.interval = interval;
+            }
+        }
+    }
+
+    getInterval(quizId:string){
+        for(let session of this.sessions){
+            if(session.quizId == quizId){
+                return session.interval;
             }
         }
     }

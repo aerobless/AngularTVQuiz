@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, OnDestroy, Input} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {NgStyle} from "@angular/common";
 import { UserDataService } from './services/userdata.service';
 import { Question } from './question';
 import { Answer } from './answer';
@@ -7,7 +8,8 @@ import applicationConfig = require("./applicationconfig");
 
 @Component({
     selector: 'my-quiz',
-    templateUrl: 'app/templates/television.component.html'
+    templateUrl: 'app/templates/television.component.html',
+    directives: [NgStyle]
 })
 
 export class TelevisionComponent implements OnInit, OnDestroy {
@@ -20,6 +22,8 @@ export class TelevisionComponent implements OnInit, OnDestroy {
     sub: any;
     quizId: string;
     playerName: string;
+    timeRemaining: number = 0;
+    @Input('width') width;
 
     constructor(private route: ActivatedRoute, private userDataService:UserDataService){
         this.socket = io(applicationConfig.SERVER_URL+":"+applicationConfig.SOCKET_CONNECTION_PORT);
@@ -41,6 +45,18 @@ export class TelevisionComponent implements OnInit, OnDestroy {
             if(this.quizId == quizId){
                 this.currentQuestion = message;
                 this.solutionActive = false;
+
+                //TODO: maybe improve to be more stable
+                if(this.timeRemaining == 0 || this.timeRemaining == 100){
+                    //Progressbar
+                    this.timeRemaining = 0;
+                    let interval = setInterval(() => {
+                        this.timeRemaining += 1;
+                        if(this.timeRemaining >= 100){
+                            clearInterval(interval);
+                        }
+                    }, 100);
+                }
             }
         }.bind(this));
 
@@ -52,7 +68,7 @@ export class TelevisionComponent implements OnInit, OnDestroy {
             }
         }.bind(this));
 
-        this.socket.emit('registerPlayerRequest',this.quizId, 'tv');
+        this.socket.emit('questionRequest',this.quizId, false);
     }
 
     ngOnDestroy() {

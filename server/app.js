@@ -11,15 +11,30 @@ var io = require('socket.io')(http);
 let sessionStorage = new sessionstorage_1.SessionStorage();
 io.on('connection', function (socket) {
     console.log('a user connected');
-    socket.on('questionRequest', function (quizId) {
-        let question = sessionStorage.getNextQuestion(quizId);
+    socket.on('questionRequest', function (quizId, sendNextQuestion) {
+        let question;
+        if (sendNextQuestion) {
+            question = sessionStorage.getNextQuestion(quizId);
+        }
+        else {
+            question = sessionStorage.getQuestion(quizId);
+        }
         socket.broadcast.emit('questionResponse', question, quizId);
         socket.emit('questionResponse', question, quizId);
-    });
-    socket.on('registerPlayerRequest', function (quizId) {
-        let question = sessionStorage.getQuestion(quizId);
-        socket.broadcast.emit('questionResponse', question, quizId);
-        socket.emit('questionResponse', question, quizId);
+        let timeRemaining = 0;
+        if (sessionStorage.getInterval(quizId) == null) {
+            sessionStorage.setInterval(quizId, setInterval(() => {
+                timeRemaining += 10;
+                if (timeRemaining >= 100) {
+                    let question = sessionStorage.getSolution(quizId);
+                    console.log("got check request");
+                    socket.broadcast.emit('solutionResponse', question, quizId);
+                    socket.emit('solutionResponse', question, quizId);
+                    clearInterval(sessionStorage.getInterval(quizId));
+                    sessionStorage.setInterval(quizId, null);
+                }
+            }, 1000));
+        }
     });
     socket.on('solutionRequest', function (quizId, answerId, playerName) {
         sessionStorage.setAnswer(quizId, answerId, playerName);

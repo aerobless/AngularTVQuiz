@@ -1,19 +1,12 @@
-<h4>Your Quiz ID: {{quizId}} and username: {{playerName}}</h4>
+<h5>Quiz ID: {{quizId}} User: {{playerName}}</h5>
 <div *ngIf="!solutionActive">
 <h2>Question: {{currentQuestion.text}}</h2>
     <div class="col-xs-12">
-        <ul>
-            <div *ngFor="let answer of currentQuestion.answers" (click)="onSelect(answer)">
-                <button type="button" class="btn btn-primary solutionButton">
-                    {{answer.text}}<span *ngIf="answer==selectedAnswer"> (selected)</span>
-                </button>
-            </div>
-        </ul>
-    </div>
-    <div class="mobileControls">
-        <button type="button" class="btn btn-primary btn-block" (click)="checkAnswer()">
-            Check
-        </button>
+        <div *ngFor="let answer of currentQuestion.answers" (click)="onSelect(answer)">
+            <button type="button" class="btn btn-primary solutionButton">
+                {{answer.text}}<span *ngIf="answer==selectedAnswer"> (selected)</span>
+            </button>
+        </div>
     </div>
 </div>
 

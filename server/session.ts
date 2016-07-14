@@ -5,4 +5,5 @@ export class Session {
     currentQuestion: Question;
     currentQuestionId: number;
     players: Player[] = [];
+    interval: any;
 }

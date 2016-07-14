@@ -45,7 +45,7 @@ var QuizComponent = (function () {
                     this.solutionActive = true;
                 }
             }.bind(this));
-            this.socket.emit('registerPlayerRequest', this.quizId, this.playerName);
+            this.socket.emit('questionRequest', this.quizId, false);
         }
         else {
             //Navigate back to start if no username was registered
@@ -57,19 +57,11 @@ var QuizComponent = (function () {
         this.sub.unsubscribe();
     };
     QuizComponent.prototype.getMessageFromServer = function () {
-        this.socket.emit('questionRequest', this.quizId);
+        this.socket.emit('questionRequest', this.quizId, true);
     };
     QuizComponent.prototype.onSelect = function (answer) {
         this.selectedAnswer = answer;
         this.socket.emit('solutionRequest', this.quizId, answer.id, this.playerName);
-    };
-    QuizComponent.prototype.checkAnswer = function () {
-        if (this.selectedAnswer == null) {
-            alert("Please select an answer first..");
-        }
-        else {
-            this.socket.emit('checkRequest', this.quizId);
-        }
     };
     QuizComponent = __decorate([
         core_1.Component({

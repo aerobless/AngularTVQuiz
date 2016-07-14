@@ -18,7 +18,7 @@ body {
 }
 
 .divSquare{
-  width:48%;
+  width:48.7%;
   height:200px;
   margin:4px;
   border:2px solid black;
@@ -27,7 +27,7 @@ body {
 }
 
 .solutionButton{
-  width:45%;
+  width:47.5%;
   height:100px;
   margin:4px;
   border:2px solid black;
@@ -41,6 +41,11 @@ body {
 }
 
 .mobileControls{
+  margin-top: 250px;
+}
+
+.fatButton{
+  height: 50px;
 }
 
  /*

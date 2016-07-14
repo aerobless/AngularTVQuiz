@@ -1,6 +1,7 @@
 /// <reference path="../typings/index.d.ts" />
 import {SessionStorage} from "./sessionstorage";
 import applicationConfig = require("../client/app/applicationconfig");
+import {Question} from "../client/app/question";
 
 var express = require('express');
 var app = express();
@@ -14,19 +15,36 @@ let sessionStorage:SessionStorage = new SessionStorage();
 io.on('connection', function(socket){
     console.log('a user connected');
 
-    socket.on( 'questionRequest', function( quizId ){ //TODO: define contract
-        
-        let question = sessionStorage.getNextQuestion(quizId);
+    socket.on( 'questionRequest', function( quizId, sendNextQuestion ){ //TODO: define contract
+
+        let question:Question;
+        if(sendNextQuestion){
+            question = sessionStorage.getNextQuestion(quizId);
+        } else {
+            question = sessionStorage.getQuestion(quizId);
+        }
 
         socket.broadcast.emit( 'questionResponse', question, quizId);
         socket.emit( 'questionResponse', question, quizId);
-    });
+        let timeRemaining = 0;
 
-    socket.on( 'registerPlayerRequest', function( quizId ){ //TODO: define contract
-        let question = sessionStorage.getQuestion(quizId);
+        if(sessionStorage.getInterval(quizId) == null){
+            sessionStorage.setInterval(quizId, setInterval(() => {
+                timeRemaining += 10;
+                if(timeRemaining >= 100){
 
-        socket.broadcast.emit( 'questionResponse', question, quizId);
-        socket.emit( 'questionResponse', question, quizId);
+                    //Extract to method..
+                    let question = sessionStorage.getSolution(quizId);
+                    console.log("got check request");
+                    socket.broadcast.emit( 'solutionResponse', question, quizId);
+                    socket.emit( 'solutionResponse', question, quizId);
+                    //Extract to method..
+
+                    clearInterval(sessionStorage.getInterval(quizId));
+                    sessionStorage.setInterval(quizId, null);
+                }
+            }, 1000));
+        }
     });
 
     socket.on( 'solutionRequest', function( quizId, answerId, playerName ){ //TODO: define contract

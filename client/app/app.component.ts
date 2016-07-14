@@ -7,9 +7,9 @@ import { UserDataService } from './services/userdata.service';
     selector: 'my-app',
     template: `
     <h1>{{title}}</h1>
-    <nav>
-        <a [routerLink]="['/start']">Reset</a> <!--TODO: remove once possible-->
-    </nav>
+    <!--<nav>
+        <a [routerLink]="['/start']">Reset</a>
+    </nav>-->
     <router-outlet></router-outlet>
   `,
     directives: [ROUTER_DIRECTIVES],
