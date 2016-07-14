@@ -17,7 +17,6 @@ var TelevisionComponent = (function () {
     function TelevisionComponent(route, userDataService) {
         this.route = route;
         this.userDataService = userDataService;
-        this.title = 'Angular TV Quiz';
         this.currentQuestionId = 0;
         this.solutionActive = false;
         this.socket = null;
@@ -32,7 +31,6 @@ var TelevisionComponent = (function () {
             _this.quizId = params['id'];
         });
         this.playerName = this.userDataService.getUsername();
-        //TODO: check if playerName is empty, if so navigate back to start
         this.currentQuestion = new question_1.Question();
         this.socket.on('questionResponse', function (message, quizId) {
             console.log('Got a message from the server: "' + message);

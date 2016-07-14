@@ -1,21 +1,24 @@
 <h4>Your Quiz ID: {{quizId}} and username: {{playerName}}</h4>
+<div *ngIf="!solutionActive">
 <h2>Question: {{currentQuestion.text}}</h2>
-<h3>Select the correct answer</h3>
-<ul>
-    <div *ngFor="let answer of currentQuestion.answers" (click)="onSelect(answer)">
-        <!--<span>{{answer.text}}</span><span *ngIf="answer==selectedAnswer"> (selected)</span>-->
-        <button type="button" class="btn btn-primary solutionButton">
-            {{answer.text}}<span *ngIf="answer==selectedAnswer"> (selected)</span>
+    <div class="col-xs-12">
+        <ul>
+            <div *ngFor="let answer of currentQuestion.answers" (click)="onSelect(answer)">
+                <button type="button" class="btn btn-primary solutionButton">
+                    {{answer.text}}<span *ngIf="answer==selectedAnswer"> (selected)</span>
+                </button>
+            </div>
+        </ul>
+    </div>
+    <div class="mobileControls">
+        <button type="button" class="btn btn-primary btn-block" (click)="checkAnswer()">
+            Check
         </button>
     </div>
-</ul>
-<div class="mobileControls, center">
-    <br>
-    <button type="button" class="btn btn-primary" (click)="checkAnswer()">
-        Check
-    </button>
+</div>
 
-    <button type="button" class="btn btn-primary" (click)="getMessageFromServer()">
+<div *ngIf="solutionActive" class="col-xs-12">
+    <button type="button" class="btn btn-primary solutionButton" (click)="getMessageFromServer()">
         Next
     </button>
 </div>

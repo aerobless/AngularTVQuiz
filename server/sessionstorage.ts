@@ -48,7 +48,7 @@ export class SessionStorage {
                         return;
                     }
                 }
-                let player:Player = {name: playerName, answer: answerId};
+                let player:Player = {name: playerName, answer: answerId, points: 0};
                 session.players.push(player);
             }
         }
@@ -63,7 +63,10 @@ export class SessionStorage {
                 }
                 //Set new answers
                 for(let player of session.players){
-                    session.currentQuestion.answers[player.answer].players.push(player.name);
+                    if(session.currentQuestion.answers[player.answer].correct){
+                        player.points += 10;
+                    }
+                    session.currentQuestion.answers[player.answer].players.push(player.name + " ("+player.points+")");
                 }
                 return session.currentQuestion;
             }

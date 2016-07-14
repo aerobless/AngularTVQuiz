@@ -44,7 +44,7 @@ class SessionStorage {
                         return;
                     }
                 }
-                let player = { name: playerName, answer: answerId };
+                let player = { name: playerName, answer: answerId, points: 0 };
                 session.players.push(player);
             }
         }
@@ -56,7 +56,10 @@ class SessionStorage {
                     answer.players = [];
                 }
                 for (let player of session.players) {
-                    session.currentQuestion.answers[player.answer].players.push(player.name);
+                    if (session.currentQuestion.answers[player.answer].correct) {
+                        player.points += 10;
+                    }
+                    session.currentQuestion.answers[player.answer].players.push(player.name + " (" + player.points + ")");
                 }
                 return session.currentQuestion;
             }

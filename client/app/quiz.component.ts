@@ -15,6 +15,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   currentQuestion: Question;
   currentQuestionId = 0;
   selectedAnswer: Answer;
+  solutionActive: boolean = false;
 
   socket = io(applicationConfig.SERVER_URL+":"+applicationConfig.SOCKET_CONNECTION_PORT);
 
@@ -37,6 +38,15 @@ export class QuizComponent implements OnInit, OnDestroy {
         console.log( 'Got a message from the server: "' + message.text );
         if(this.quizId == quizId){
           this.currentQuestion = message;
+          this.solutionActive = false;
+          this.selectedAnswer = null;
+        }
+      }.bind(this));
+
+      this.socket.on('solutionResponse', function(message, quizId){
+        console.log( 'Got a message from the server: "' + message );
+        if(this.quizId == quizId){
+          this.solutionActive = true;
         }
       }.bind(this));
 

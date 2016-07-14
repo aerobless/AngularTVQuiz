@@ -11,7 +11,6 @@ import applicationConfig = require("./applicationconfig");
 })
 
 export class TelevisionComponent implements OnInit, OnDestroy {
-    title = 'Angular TV Quiz'
     currentQuestion: Question;
     currentQuestionId = 0;
     selectedAnswer: Answer;
@@ -34,7 +33,6 @@ export class TelevisionComponent implements OnInit, OnDestroy {
             this.quizId = params['id'];
         });
         this.playerName = this.userDataService.getUsername();
-        //TODO: check if playerName is empty, if so navigate back to start
 
         this.currentQuestion = new Question();
 
