@@ -46,8 +46,6 @@ class SessionStorage {
                 }
                 let player = { name: playerName, answer: answerId };
                 session.players.push(player);
-                console.log(session.players);
-                console.log(player);
             }
         }
     }

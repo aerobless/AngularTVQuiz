@@ -13,9 +13,10 @@ var router_1 = require('@angular/router');
 var userdata_service_1 = require('./services/userdata.service');
 var question_1 = require('./question');
 var QuizComponent = (function () {
-    function QuizComponent(route, userDataService) {
+    function QuizComponent(route, userDataService, router) {
         this.route = route;
         this.userDataService = userDataService;
+        this.router = router;
         this.title = 'Angular TV Quiz';
         this.currentQuestionId = 0;
         this.socket = io('http://localhost:8000');
@@ -26,15 +27,21 @@ var QuizComponent = (function () {
             _this.quizId = params['id'];
         });
         this.playerName = this.userDataService.getUsername();
-        //TODO: check if playerName is empty, if so navigate back to start
         this.currentQuestion = new question_1.Question();
-        this.socket.on('questionResponse', function (message, quizId) {
-            console.log('Got a message from the server: "' + message.text);
-            if (this.quizId == quizId) {
-                this.currentQuestion = message;
-            }
-        }.bind(this));
-        this.socket.emit('registerPlayerRequest', this.quizId, this.playerName);
+        if (this.playerName) {
+            this.socket.on('questionResponse', function (message, quizId) {
+                console.log('Got a message from the server: "' + message.text);
+                if (this.quizId == quizId) {
+                    this.currentQuestion = message;
+                }
+            }.bind(this));
+            this.socket.emit('registerPlayerRequest', this.quizId, this.playerName);
+        }
+        else {
+            //Navigate back to start if no username was registered
+            var link = ['/start'];
+            this.router.navigate(link);
+        }
     };
     QuizComponent.prototype.ngOnDestroy = function () {
         this.sub.unsubscribe();
@@ -59,7 +66,7 @@ var QuizComponent = (function () {
             selector: 'my-quiz',
             templateUrl: 'app/templates/quiz.component.html',
         }), 
-        __metadata('design:paramtypes', [router_1.ActivatedRoute, userdata_service_1.UserDataService])
+        __metadata('design:paramtypes', [router_1.ActivatedRoute, userdata_service_1.UserDataService, router_1.Router])
     ], QuizComponent);
     return QuizComponent;
 }());

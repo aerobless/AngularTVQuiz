@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserDataService } from './services/userdata.service';
 import { Question } from './question';
 import { Answer } from './answer';
@@ -21,7 +21,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   quizId: string;
   playerName: string;
 
-  constructor(private route: ActivatedRoute, private userDataService:UserDataService){
+  constructor(private route: ActivatedRoute, private userDataService:UserDataService, private router: Router){
   }
 
   ngOnInit() {
@@ -29,18 +29,22 @@ export class QuizComponent implements OnInit, OnDestroy {
       this.quizId = params['id'];
     });
     this.playerName = this.userDataService.getUsername();
-    //TODO: check if playerName is empty, if so navigate back to start
-
     this.currentQuestion = new Question();
 
-    this.socket.on('questionResponse', function(message, quizId){
-      console.log( 'Got a message from the server: "' + message.text );
-      if(this.quizId == quizId){
-        this.currentQuestion = message;
-      }
-    }.bind(this));
+    if(this.playerName){ //checks if it is empty
+      this.socket.on('questionResponse', function(message, quizId){
+        console.log( 'Got a message from the server: "' + message.text );
+        if(this.quizId == quizId){
+          this.currentQuestion = message;
+        }
+      }.bind(this));
 
-    this.socket.emit('registerPlayerRequest',this.quizId, this.playerName);
+      this.socket.emit('registerPlayerRequest',this.quizId, this.playerName);
+    }else{
+      //Navigate back to start if no username was registered
+      let link = ['/start'];
+      this.router.navigate(link);
+    }
   }
 
   ngOnDestroy() {
