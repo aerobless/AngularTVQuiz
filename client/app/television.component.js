@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var userdata_service_1 = require('./services/userdata.service');
 var question_1 = require('./question');
+var applicationconfig_1 = require("./applicationconfig");
 var TelevisionComponent = (function () {
     function TelevisionComponent(route, userDataService) {
         this.route = route;
@@ -20,7 +21,7 @@ var TelevisionComponent = (function () {
         this.currentQuestionId = 0;
         this.solutionActive = false;
         this.socket = null;
-        this.socket = io('http://10.88.234.136:9998');
+        this.socket = io(applicationconfig_1.ApplicationConfig.SERVER_URL + ":" + applicationconfig_1.ApplicationConfig.SOCKET_CONNECTION_PORT);
         this.socket.on('greetings', function (message, id) {
             console.log('Got a message from the server: "' + message + "', my ID is: " + id);
         }.bind(this));

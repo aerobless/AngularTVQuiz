@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserDataService } from './services/userdata.service';
 import { Question } from './question';
 import { Answer } from './answer';
+import {ApplicationConfig} from "./applicationconfig";
 
 @Component({
   selector: 'my-quiz',
@@ -15,7 +16,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   currentQuestionId = 0;
   selectedAnswer: Answer;
 
-  socket = io('http://10.88.234.136:9998');
+  socket = io(ApplicationConfig.SERVER_URL+":"+ApplicationConfig.SOCKET_CONNECTION_PORT);
 
   sub: any;
   quizId: string;
