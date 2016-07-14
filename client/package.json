@@ -24,6 +24,7 @@
     "angular2-cookie": "^1.2.2",
     "angular2-in-memory-web-api": "0.0.12",
     "bootstrap": "^3.3.6",
+    "bootstrap-material-design": "^0.5.10",
     "core-js": "^2.4.0",
     "ng2-bootstrap": "^1.0.17",
     "reflect-metadata": "^0.1.3",

@@ -4,7 +4,7 @@
     <div class="col-xs-12">
         <div *ngFor="let answer of currentQuestion.answers" (click)="onSelect(answer)">
             <button type="button" class="btn btn-primary solutionButton">
-                {{answer.text}}<span *ngIf="answer==selectedAnswer"> (selected)</span>
+                {{answer.text}}<span *ngIf="answer==selectedAnswer"><br>(selected)</span>
             </button>
         </div>
     </div>

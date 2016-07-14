@@ -17,4 +17,7 @@ import { UserDataService } from './services/userdata.service';
 })
 export class AppComponent {
     title = 'AngularTVQuiz';
+
+    ngOnInit() {
+    }
 }

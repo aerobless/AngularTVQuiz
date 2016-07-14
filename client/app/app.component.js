@@ -16,6 +16,8 @@ var AppComponent = (function () {
     function AppComponent() {
         this.title = 'AngularTVQuiz';
     }
+    AppComponent.prototype.ngOnInit = function () {
+    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
