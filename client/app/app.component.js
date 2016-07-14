@@ -14,7 +14,7 @@ var core_2 = require('angular2-cookie/core');
 var userdata_service_1 = require('./services/userdata.service');
 var AppComponent = (function () {
     function AppComponent() {
-        this.title = 'AngularTVQuiz';
+        this.title = 'Angular TV Quiz';
     }
     AppComponent.prototype.ngOnInit = function () {
     };

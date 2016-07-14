@@ -1,11 +1,16 @@
 <h4>Quiz ID: {{quizId}}</h4>
 <div class="center">
-    <h2>Question: {{currentQuestion.text}}</h2>
+    <h2 class="tvQuestion">Question: {{currentQuestion.text}}</h2>
+    <br>
     <div *ngIf="!solutionActive">
         <div>
             <div *ngFor="let answer of currentQuestion.answers" (click)="onSelect(answer)">
-                <div class="divSquare">
-                    <h1>{{answer.text}}</h1>
+                <div class="col-xs-6">
+                    <div class="panel panel-default tvSolution">
+                        <div class="panel-body">
+                            <h1>{{answer.text}}</h1>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -15,20 +20,34 @@
                     {{timeRemaining}}
                 </div>
             </div>
+            <div class="tvProgressHelper">
+                <p>{{timeRemainingInSeconds}} seconds left</p>
+            </div>
         </div>
     </div>
     <div *ngIf="solutionActive">
-        <ul>
-            <div *ngFor="let answer of currentQuestion.answers" (click)="onSelect(answer)">
-                <div class="divSquare" *ngIf="!answer.correct">
-                    <h1>{{answer.text}}</h1>
-                    <p>{{answer.players}}</p>
+        <div *ngFor="let answer of currentQuestion.answers" (click)="onSelect(answer)">
+            <div class="col-xs-6">
+                <div class="panel tvSolution" *ngIf="!answer.correct">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Wrong answer</h3>
+                    </div>
+                    <div class="panel-body">
+                        <h1>{{answer.text}}</h1>
+                        <p>{{answer.players}}</p>
+                    </div>
                 </div>
-                <div class="divSquare correctAnswer" *ngIf="answer.correct">
-                    <h1>✓ {{answer.text}}</h1>
-                    <p>{{answer.players}}</p>
+
+                <div class="panel panel-success tvSolution" *ngIf="answer.correct">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Correct answer</h3>
+                    </div>
+                    <div class="panel-body">
+                        <h1>{{answer.text}}</h1>
+                        <p>{{answer.players}}</p>
+                    </div>
                 </div>
             </div>
-        </ul>
+        </div>
     </div>
 </div>

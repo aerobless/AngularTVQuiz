@@ -22,6 +22,7 @@ var TelevisionComponent = (function () {
         this.solutionActive = false;
         this.socket = null;
         this.timeRemaining = 0;
+        this.timeRemainingInSeconds = 10;
         this.socket = io(applicationConfig.SERVER_URL + ":" + applicationConfig.SOCKET_CONNECTION_PORT);
         this.socket.on('greetings', function (message, id) {
             console.log('Got a message from the server: "' + message + "', my ID is: " + id);
@@ -44,8 +45,10 @@ var TelevisionComponent = (function () {
                 if (this.timeRemaining == 0 || this.timeRemaining == 100) {
                     //Progressbar
                     this.timeRemaining = 0;
+                    this.timeRemainingInSeconds = 10;
                     var interval_1 = setInterval(function () {
                         _this.timeRemaining += 1;
+                        _this.timeRemainingInSeconds = (_this.timeRemainingInSeconds - 0.1).toFixed(2);
                         if (_this.timeRemaining >= 100) {
                             clearInterval(interval_1);
                         }

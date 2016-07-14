@@ -1,16 +1,25 @@
+<h5>
+    <i class="fa fa-television" aria-hidden="true"></i>
+    TV URL: <a href="{{SERVER_URL}}:{{HTTP_PORT}}/tv/{{quizId}}">{{SERVER_URL}}:{{HTTP_PORT}}/tv/{{quizId}}</a>
+</h5>
+<p>
+    Open a browser on your TV and enter the url from above. Then click "play" to start. <br>
+    Any number of players can join the quiz at any time. Just make sure they use your Quiz ID to join.
+</p>
 
-<h5>TV URL: <a href="http://localhost:9999/tv/{{quizId}}">{{SERVER_URL}}:{{HTTP_PORT}}/tv/{{quizId}}</a></h5>
-<p>Accept a random quiz id or chose one yourself.</p>
-<div class="input-group">
-    <span class="input-group-addon">Quiz ID</span>
-    <input type="text" [(ngModel)]="quizId" class="form-control" aria-describedby="basic-addon1">
-</div>
-<br> <!--TODO: Remove br and use proper grid -->
-<div class="input-group">
-    <span class="input-group-addon">Your name</span>
-    <input type="text" [(ngModel)]="playerName" class="form-control" aria-describedby="basic-addon1">
-</div>
-<br> <!--TODO: Remove br and use proper grid -->
-<button type="button" class="btn btn-primary" (click)="startQuiz()">
-    Play
-</button>
+<form class="form-horizontal">
+    <fieldset>
+        <div class="input-group">
+            <span class="input-group-addon">Quiz ID</span>
+            <input type="text" [(ngModel)]="quizId" class="form-control" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">Your name</span>
+            <input type="text" [(ngModel)]="playerName" class="form-control" aria-describedby="basic-addon1">
+        </div>
+
+    </fieldset>
+    <button type="button" class="btn btn-raised btn-primary" (click)="startQuiz()">
+        Play
+    </button>
+</form>
