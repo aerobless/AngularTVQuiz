@@ -4,5 +4,5 @@ export class Session {
     quizId: string;
     currentQuestion: Question;
     currentQuestionId: number;
-    players: Player[];
+    players: Player[] = [];
 }

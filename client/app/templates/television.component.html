@@ -15,9 +15,11 @@
             <div *ngFor="let answer of currentQuestion.answers" (click)="onSelect(answer)">
                 <div class="divSquare" *ngIf="!answer.correct">
                     <h1>{{answer.text}}</h1>
+                    <p>{{answer.players}}</p>
                 </div>
                 <div class="divSquare correctAnswer" *ngIf="answer.correct">
                     <h1>✓ {{answer.text}}</h1>
+                    <p>{{answer.players}}</p>
                 </div>
             </div>
         </ul>

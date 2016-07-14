@@ -34,7 +34,7 @@ io.on('connection', function(socket){
     });
 
     socket.on( 'checkRequest', function( quizId){ //TODO: define contract
-        let question = sessionStorage.getQuestion(quizId);
+        let question = sessionStorage.getSolution(quizId);
         console.log("got check request");
         socket.broadcast.emit( 'solutionResponse', question, quizId);
         socket.emit( 'solutionResponse', question, quizId);

@@ -25,7 +25,7 @@ io.on('connection', function (socket) {
         console.log(playerName + " registered answer " + answerId + " for quiz " + quizId);
     });
     socket.on('checkRequest', function (quizId) {
-        let question = sessionStorage.getQuestion(quizId);
+        let question = sessionStorage.getSolution(quizId);
         console.log("got check request");
         socket.broadcast.emit('solutionResponse', question, quizId);
         socket.emit('solutionResponse', question, quizId);

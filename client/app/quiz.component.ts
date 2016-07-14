@@ -57,15 +57,10 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   checkAnswer(){
-    this.socket.emit( 'checkRequest', this.quizId);
-
-    /*if(this.selectedAnswer != null && this.selectedAnswer.correct){
-      alert("Correct!");
-      this.getMessageFromServer();
-    }else if(this.selectedAnswer != null && !this.selectedAnswer.correct){
-      alert("Wrong..");
-    }else{
+    if(this.selectedAnswer == null){
       alert("Please select an answer first..");
-    }*/
+    } else {
+      this.socket.emit( 'checkRequest', this.quizId);
+    }
   }
 }

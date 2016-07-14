@@ -47,15 +47,12 @@ var QuizComponent = (function () {
         this.socket.emit('solutionRequest', this.quizId, answer.id, this.playerName);
     };
     QuizComponent.prototype.checkAnswer = function () {
-        this.socket.emit('checkRequest', this.quizId);
-        /*if(this.selectedAnswer != null && this.selectedAnswer.correct){
-          alert("Correct!");
-          this.getMessageFromServer();
-        }else if(this.selectedAnswer != null && !this.selectedAnswer.correct){
-          alert("Wrong..");
-        }else{
-          alert("Please select an answer first..");
-        }*/
+        if (this.selectedAnswer == null) {
+            alert("Please select an answer first..");
+        }
+        else {
+            this.socket.emit('checkRequest', this.quizId);
+        }
     };
     QuizComponent = __decorate([
         core_1.Component({
