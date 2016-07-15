@@ -1,82 +1,83 @@
 h1 {
-  color: #369;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 250%;
+    color: #369;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 250%;
 }
+
 .appBody {
-  margin: 2em;
+    margin: 2em;
 }
 
 .center {
-  margin: auto;
-  width: 80%;
-  padding: 10px;
+    margin: auto;
+    width: 80%;
+    padding: 10px;
 }
 
 .center-text {
-  text-align: center;
+    text-align: center;
 }
 
-.divSquare{
-  width:48.7%;
-  height:200px;
-  margin:4px;
-  border:2px solid black;
-  float: left;
-  text-align: center;
+.divSquare {
+    width: 48.7%;
+    height: 200px;
+    margin: 4px;
+    border: 2px solid black;
+    float: left;
+    text-align: center;
 }
 
-.tvQuestion{
-  padding-left: 15px;
-  padding-right: 15px;
+.tvQuestion {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
-.tvSolution{
-  height: 250px;
-  text-align: center;
+.tvSolution {
+    height: 250px;
+    text-align: center;
 }
 
-.tvProgressHelper{
-  margin-top: -10px;
-  float: right;
+.tvProgressHelper {
+    margin-top: -10px;
+    float: right;
 }
 
-.solutionButtonContainer{
-  padding-right: 0;
-  padding-left: 0;
+.solutionButtonContainer {
+    padding-right: 0;
+    padding-left: 0;
 }
 
-.solutionButton{
-  width:100%;
-  height:100px;
-  white-space: normal;
+.solutionButton {
+    width: 100%;
+    height: 100px;
+    white-space: normal;
 }
 
-.nextQuestionButton{
-  width:100%;
-  height:60px;
-  white-space: normal;
+.nextQuestionButton {
+    width: 100%;
+    height: 60px;
+    white-space: normal;
 }
 
 .input-group-addon {
-  min-width:90px;
-  text-align:right;
+    min-width: 90px;
+    text-align: right;
 }
 
-.correctAnswer{
-  border-color: #00DD00;
-  background-color: #d6e9c6;
+.correctAnswer {
+    border-color: #00DD00;
+    background-color: #d6e9c6;
 }
 
-.mobileControls{
-  margin-top: 250px;
+.mobileControls {
+    margin-top: 250px;
 }
 
-.fatButton{
-  height: 50px;
+.fatButton {
+    height: 50px;
 }
 
- /*
-  * See https://github.com/angular/angular.io/blob/master/public/docs/_examples/styles.css
-  * for the full set of master styles used by the documentation samples
-  */
+/*
+ * See https://github.com/angular/angular.io/blob/master/public/docs/_examples/styles.css
+ * for the full set of master styles used by the documentation samples
+ */

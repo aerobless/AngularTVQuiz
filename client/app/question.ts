@@ -1,5 +1,5 @@
-import { Answer } from './answer';
+import {Answer} from './answer';
 export class Question {
-    text: string;
-    answers: Answer[];
+    text:string;
+    answers:Answer[];
 }

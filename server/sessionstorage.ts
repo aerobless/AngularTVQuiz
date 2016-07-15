@@ -4,34 +4,46 @@ import {Player} from "./player";
 export class SessionStorage {
     sessions:Session[] = [];
 
-    getQuestion(quizId:string){
-        for(let session of this.sessions){
-            if(session.quizId == quizId){
+    getQuestion(quizId:string) {
+        for (let session of this.sessions) {
+            if (session.quizId == quizId) {
                 return session.currentQuestion;
             }
         }
-        let session:Session = {quizId: quizId, currentQuestion: QUESTIONS[0], currentQuestionId: 0, players: [], interval: null};
-        this.sessions.push(session);
-        return session.currentQuestion;
-    }
-    
-    getNextQuestion(quizId:string){
-        for(let session of this.sessions){
-            if(session.quizId == quizId){
-                this.nextQuestion(quizId);
-                return session.currentQuestion;
-            }
-        }
-        let session:Session = {quizId: quizId, currentQuestion: QUESTIONS[0], currentQuestionId: 0, players: [], interval: null};
+        let session:Session = {
+            quizId: quizId,
+            currentQuestion: QUESTIONS[0],
+            currentQuestionId: 0,
+            players: [],
+            interval: null
+        };
         this.sessions.push(session);
         return session.currentQuestion;
     }
 
-    private nextQuestion(quizId:string){
-        for(let session of this.sessions){
-            if(session.quizId == quizId){
-                session.currentQuestionId = session.currentQuestionId+1;
-                if(session.currentQuestionId==QUESTIONS.length){
+    getNextQuestion(quizId:string) {
+        for (let session of this.sessions) {
+            if (session.quizId == quizId) {
+                this.nextQuestion(quizId);
+                return session.currentQuestion;
+            }
+        }
+        let session:Session = {
+            quizId: quizId,
+            currentQuestion: QUESTIONS[0],
+            currentQuestionId: 0,
+            players: [],
+            interval: null
+        };
+        this.sessions.push(session);
+        return session.currentQuestion;
+    }
+
+    private nextQuestion(quizId:string) {
+        for (let session of this.sessions) {
+            if (session.quizId == quizId) {
+                session.currentQuestionId = session.currentQuestionId + 1;
+                if (session.currentQuestionId == QUESTIONS.length) {
                     session.currentQuestionId = 0;
                 }
                 session.currentQuestion = QUESTIONS[session.currentQuestionId];
@@ -39,11 +51,11 @@ export class SessionStorage {
         }
     }
 
-    setAnswer(quizId:string, answerId:number, playerName:string){
-        for(let session of this.sessions){
-            if(session.quizId == quizId){
-                for(let player of session.players){
-                    if(player.name === playerName){
+    setAnswer(quizId:string, answerId:number, playerName:string) {
+        for (let session of this.sessions) {
+            if (session.quizId == quizId) {
+                for (let player of session.players) {
+                    if (player.name === playerName) {
                         player.answer = answerId;
                         return;
                     }
@@ -54,20 +66,20 @@ export class SessionStorage {
         }
     }
 
-    getSolution(quizId:string){
-        for(let session of this.sessions){
-            if(session.quizId == quizId){
+    getSolution(quizId:string) {
+        for (let session of this.sessions) {
+            if (session.quizId == quizId) {
                 //Reset all answers
-                for(let answer of session.currentQuestion.answers){
+                for (let answer of session.currentQuestion.answers) {
                     answer.players = [];
                 }
                 //Set new answers
-                for(let player of session.players){
-                    if(player.answer != null){
-                        if(session.currentQuestion.answers[player.answer].correct){
+                for (let player of session.players) {
+                    if (player.answer != null) {
+                        if (session.currentQuestion.answers[player.answer].correct) {
                             player.points += 10;
                         }
-                        session.currentQuestion.answers[player.answer].players.push(player.name + " ("+player.points+")");
+                        session.currentQuestion.answers[player.answer].players.push(player.name + " (" + player.points + ")");
                     }
                     player.answer = null;
                 }
@@ -76,17 +88,17 @@ export class SessionStorage {
         }
     }
 
-    setInterval(quizId:string, interval){
-        for(let session of this.sessions){
-            if(session.quizId == quizId){
+    setInterval(quizId:string, interval) {
+        for (let session of this.sessions) {
+            if (session.quizId == quizId) {
                 session.interval = interval;
             }
         }
     }
 
-    getInterval(quizId:string){
-        for(let session of this.sessions){
-            if(session.quizId == quizId){
+    getInterval(quizId:string) {
+        for (let session of this.sessions) {
+            if (session.quizId == quizId) {
                 return session.interval;
             }
         }
@@ -94,9 +106,41 @@ export class SessionStorage {
 
 }
 
-const QUESTIONS: Question[] = [
-    {text: 'An apple a day keeps the ___ away', answers: [{id: 0, text: 'doctor', correct: true, players: []}, {id: 1, text: 'cat', correct: false, players: []}, {id: 2, text: 'ghost', correct: false, players: []}, {id: 3, text: 'alien', correct: false, players: []}]},
-    {text: 'What is the name of the highest mountain in the world', answers: [{id: 0, text: 'Mount Everest', correct: true, players: []}, {id: 1, text: 'Matterhorn', correct: false, players: []}]},
-    {text: 'When was Google founded?', answers: [{id: 0, text: 'Sept. 4, 1998', correct: true, players: []}, {id: 1, text: 'Aug. 19, 1985', correct: false, players: []}, {id: 2, text: 'Sept. 15, 1997', correct: false, players: []}]},
-    {text: 'What was the name of the first apple computer?', answers: [{id: 0, text: 'Apple I', correct: true, players: []}, {id: 1, text: 'Apple One', correct: false, players: []}, {id: 2, text: 'A1', correct: false, players: []}]}
+const QUESTIONS:Question[] = [
+    {
+        text: 'An apple a day keeps the ___ away',
+        answers: [{id: 0, text: 'doctor', correct: true, players: []}, {
+            id: 1,
+            text: 'cat',
+            correct: false,
+            players: []
+        }, {id: 2, text: 'ghost', correct: false, players: []}, {id: 3, text: 'alien', correct: false, players: []}]
+    },
+    {
+        text: 'What is the name of the highest mountain in the world',
+        answers: [{id: 0, text: 'Mount Everest', correct: true, players: []}, {
+            id: 1,
+            text: 'Matterhorn',
+            correct: false,
+            players: []
+        }]
+    },
+    {
+        text: 'When was Google founded?',
+        answers: [{id: 0, text: 'Sept. 4, 1998', correct: true, players: []}, {
+            id: 1,
+            text: 'Aug. 19, 1985',
+            correct: false,
+            players: []
+        }, {id: 2, text: 'Sept. 15, 1997', correct: false, players: []}]
+    },
+    {
+        text: 'What was the name of the first apple computer?',
+        answers: [{id: 0, text: 'Apple I', correct: true, players: []}, {
+            id: 1,
+            text: 'Apple One',
+            correct: false,
+            players: []
+        }, {id: 2, text: 'A1', correct: false, players: []}]
+    }
 ];

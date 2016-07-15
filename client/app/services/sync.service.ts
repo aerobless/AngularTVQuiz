@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import applicationConfig = require("../applicationconfig");
 import {Question} from "../question";
 import {Subject} from "rxjs/Rx";
 
 @Injectable()
 export class SyncService {
-    private socket = io(applicationConfig.SERVER_URL+":"+applicationConfig.SOCKET_CONNECTION_PORT);
+    private socket = io(applicationConfig.SERVER_URL + ":" + applicationConfig.SOCKET_CONNECTION_PORT);
     private currentQuestion = new Subject<Question>();
     private currentSolution = new Subject<Question>();
     private quizId:string;
@@ -14,14 +14,14 @@ export class SyncService {
     init(quizId:string) {
         this.quizId = quizId;
 
-        this.socket.on('questionResponse', function(message, remoteQuizId){
-            if(this.quizId == remoteQuizId){
+        this.socket.on('questionResponse', function (message, remoteQuizId) {
+            if (this.quizId == remoteQuizId) {
                 this.currentQuestion.next(message);
             }
         }.bind(this));
 
-        this.socket.on('solutionResponse', function(message, quizId){
-            if(this.quizId == quizId){
+        this.socket.on('solutionResponse', function (message, quizId) {
+            if (this.quizId == quizId) {
                 this.solutionActive.next(true);
                 this.currentSolution.next(message);
             }
@@ -36,15 +36,15 @@ export class SyncService {
         return this.currentSolution.asObservable();
     }
 
-    isSolutionActive(){
+    isSolutionActive() {
         return this.solutionActive.asObservable();
     }
-    
-    requestQuestionFromServer(nextQuestion:boolean){
-        this.socket.emit('questionRequest',this.quizId, nextQuestion);
+
+    requestQuestionFromServer(nextQuestion:boolean) {
+        this.socket.emit('questionRequest', this.quizId, nextQuestion);
     }
 
-    sendAnswerToServer(answerId:number, playerName:string){
+    sendAnswerToServer(answerId:number, playerName:string) {
         this.socket.emit('solutionRequest', this.quizId, answerId, playerName);
     }
 }

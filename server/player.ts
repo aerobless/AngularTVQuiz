@@ -1,5 +1,5 @@
 export class Player {
-    name: string;
-    answer: number;
-    points: number;
+    name:string;
+    answer:number;
+    points:number;
 }

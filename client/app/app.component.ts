@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
-import { CookieService } from 'angular2-cookie/core';
-import { UserDataService } from './services/userdata.service';
+import {Component} from '@angular/core';
+import {ROUTER_DIRECTIVES} from '@angular/router';
+import {CookieService} from 'angular2-cookie/core';
+import {UserDataService} from './services/userdata.service';
 
 @Component({
     selector: 'my-app',
@@ -9,11 +9,12 @@ import { UserDataService } from './services/userdata.service';
     directives: [ROUTER_DIRECTIVES],
     providers: [CookieService, UserDataService]
 })
+
 export class AppComponent {
     title = 'Angular TV Quiz';
     quizId:string = 'unknown';
 
-    constructor(private userDataService:UserDataService){
+    constructor(private userDataService:UserDataService) {
     }
 
     ngOnInit() {

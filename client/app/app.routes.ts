@@ -1,9 +1,9 @@
-import { provideRouter, RouterConfig }  from '@angular/router';
-import { QuizComponent } from './quiz.component';
-import { TelevisionComponent } from './television.component';
-import { StartComponent } from './start.component';
+import {provideRouter, RouterConfig}  from '@angular/router';
+import {QuizComponent} from './quiz.component';
+import {TelevisionComponent} from './television.component';
+import {StartComponent} from './start.component';
 
-const routes: RouterConfig = [
+const routes:RouterConfig = [
     {
         path: 'quiz/:id',
         component: QuizComponent

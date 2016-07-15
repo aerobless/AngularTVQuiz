@@ -19,7 +19,6 @@ var UserDataService = (function () {
     UserDataService.prototype.getUsername = function () {
         return this.cookieService.get(UserDataService.USERNAME);
     };
-    //TODO: validation & throw exception if bad?
     UserDataService.prototype.setUsername = function (username) {
         this.cookieService.put(UserDataService.USERNAME, username);
     };

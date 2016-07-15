@@ -1,7 +1,9 @@
 "use strict";
-class Answer {
-    constructor() {
+var Answer = (function () {
+    function Answer() {
         this.players = [];
     }
-}
+    return Answer;
+}());
 exports.Answer = Answer;
+//# sourceMappingURL=answer.js.map
