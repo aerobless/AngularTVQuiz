@@ -1,4 +1,7 @@
 "use strict";
-class Player {
-}
+var Player = (function () {
+    function Player() {
+    }
+    return Player;
+}());
 exports.Player = Player;

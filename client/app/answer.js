@@ -6,4 +6,3 @@ var Answer = (function () {
     return Answer;
 }());
 exports.Answer = Answer;
-//# sourceMappingURL=answer.js.map

@@ -1,7 +1,8 @@
 "use strict";
-class Session {
-    constructor() {
+var Session = (function () {
+    function Session() {
         this.players = [];
     }
-}
+    return Session;
+}());
 exports.Session = Session;

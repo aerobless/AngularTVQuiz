@@ -1,6 +1,6 @@
 "use strict";
-const sessionstorage_1 = require("./sessionstorage");
-const applicationConfig = require("../client/app/applicationconfig");
+var sessionstorage_1 = require("./sessionstorage");
+var applicationConfig = require("../client/app/applicationconfig");
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
@@ -8,11 +8,11 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-let sessionStorage = new sessionstorage_1.SessionStorage();
+var sessionStorage = new sessionstorage_1.SessionStorage();
 io.on('connection', function (socket) {
     console.log('a user connected');
     socket.on('questionRequest', function (quizId, sendNextQuestion) {
-        let question;
+        var question;
         if (sendNextQuestion) {
             question = sessionStorage.getNextQuestion(quizId);
         }
@@ -21,15 +21,15 @@ io.on('connection', function (socket) {
         }
         socket.broadcast.emit('questionResponse', question, quizId);
         socket.emit('questionResponse', question, quizId);
-        let timeRemaining = 0;
+        var timeRemaining = 0;
         if (sessionStorage.getInterval(quizId) == null) {
-            sessionStorage.setInterval(quizId, setInterval(() => {
+            sessionStorage.setInterval(quizId, setInterval(function () {
                 timeRemaining += 10;
                 if (timeRemaining >= 100) {
-                    let question = sessionStorage.getSolution(quizId);
+                    var question_1 = sessionStorage.getSolution(quizId);
                     console.log("got check request");
-                    socket.broadcast.emit('solutionResponse', question, quizId);
-                    socket.emit('solutionResponse', question, quizId);
+                    socket.broadcast.emit('solutionResponse', question_1, quizId);
+                    socket.emit('solutionResponse', question_1, quizId);
                     clearInterval(sessionStorage.getInterval(quizId));
                     sessionStorage.setInterval(quizId, null);
                 }
