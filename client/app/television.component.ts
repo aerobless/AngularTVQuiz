@@ -5,11 +5,13 @@ import { UserDataService } from './services/userdata.service';
 import { Question } from './question';
 import { Answer } from './answer';
 import applicationConfig = require("./applicationconfig");
+import {SyncService} from "./services/sync.service";
 
 @Component({
     selector: 'my-tv',
     templateUrl: 'app/templates/television.component.html',
-    directives: [NgStyle]
+    directives: [NgStyle],
+    providers: [SyncService]
 })
 
 export class TelevisionComponent implements OnInit, OnDestroy {
@@ -18,7 +20,6 @@ export class TelevisionComponent implements OnInit, OnDestroy {
     selectedAnswer: Answer;
     solutionActive: boolean = false;
 
-    socket = null;
     sub: any;
     quizId: string;
     playerName: string;
@@ -26,27 +27,22 @@ export class TelevisionComponent implements OnInit, OnDestroy {
     timeRemainingInSeconds: number = 10;
     @Input('width') width;
 
-    constructor(private route: ActivatedRoute, private userDataService:UserDataService){
+    constructor(private route: ActivatedRoute, private userDataService:UserDataService, private syncService:SyncService ){
     }
 
     ngOnInit() {
-        this.socket = io(applicationConfig.SERVER_URL+":"+applicationConfig.SOCKET_CONNECTION_PORT);
-        this.socket.on('greetings', function(message, id){
-            console.log( 'Got a message from the server: "' + message + "', my ID is: " + id );
-        }.bind(this));
-
         this.sub = this.route.params.subscribe(params => {
             this.quizId = params['id'];
             this.userDataService.setQuizId(this.quizId);
         });
+
         this.playerName = this.userDataService.getUsername();
-
         this.currentQuestion = new Question();
+        this.syncService.init(this.quizId);
 
-        this.socket.on('questionResponse', function(message, quizId){
-            console.log( 'Got a message from the server: "' + message );
-            if(this.quizId == quizId){
-                this.currentQuestion = message;
+        this.syncService.getQuestion().subscribe(
+            question => {
+                this.currentQuestion = question;
                 this.solutionActive = false;
 
                 if(this.timeRemaining == 0 || this.timeRemaining == 100){
@@ -62,22 +58,20 @@ export class TelevisionComponent implements OnInit, OnDestroy {
                     }, 100);
                 }
             }
-        }.bind(this));
+        );
 
-        this.socket.on('solutionResponse', function(message, quizId){
-            console.log( 'Got a message from the server: "' + message );
-            if(this.quizId == quizId){
-                this.currentQuestion = message;
+        this.syncService.getSolution().subscribe(
+            question => {
+                this.currentQuestion = question;
                 this.solutionActive = true;
-            }
-        }.bind(this));
 
-        this.socket.emit('questionRequest',this.quizId, false);
+            }
+        );
+
+        this.syncService.requestQuestionFromServer(false);
     }
 
     ngOnDestroy() {
         this.sub.unsubscribe();
     }
-
-    onSelect(answer: Answer) { this.selectedAnswer = answer; }
 }

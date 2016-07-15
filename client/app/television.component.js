@@ -13,62 +13,51 @@ var router_1 = require('@angular/router');
 var common_1 = require("@angular/common");
 var userdata_service_1 = require('./services/userdata.service');
 var question_1 = require('./question');
-var applicationConfig = require("./applicationconfig");
+var sync_service_1 = require("./services/sync.service");
 var TelevisionComponent = (function () {
-    function TelevisionComponent(route, userDataService) {
+    function TelevisionComponent(route, userDataService, syncService) {
         this.route = route;
         this.userDataService = userDataService;
+        this.syncService = syncService;
         this.currentQuestionId = 0;
         this.solutionActive = false;
-        this.socket = null;
         this.timeRemaining = 0;
         this.timeRemainingInSeconds = 10;
     }
     TelevisionComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.socket = io(applicationConfig.SERVER_URL + ":" + applicationConfig.SOCKET_CONNECTION_PORT);
-        this.socket.on('greetings', function (message, id) {
-            console.log('Got a message from the server: "' + message + "', my ID is: " + id);
-        }.bind(this));
         this.sub = this.route.params.subscribe(function (params) {
             _this.quizId = params['id'];
             _this.userDataService.setQuizId(_this.quizId);
         });
         this.playerName = this.userDataService.getUsername();
         this.currentQuestion = new question_1.Question();
-        this.socket.on('questionResponse', function (message, quizId) {
-            var _this = this;
-            console.log('Got a message from the server: "' + message);
-            if (this.quizId == quizId) {
-                this.currentQuestion = message;
-                this.solutionActive = false;
-                if (this.timeRemaining == 0 || this.timeRemaining == 100) {
-                    //Progressbar
-                    this.timeRemaining = 0;
-                    this.timeRemainingInSeconds = 10;
-                    var interval_1 = setInterval(function () {
-                        _this.timeRemaining += 1;
-                        _this.timeRemainingInSeconds = (_this.timeRemainingInSeconds - 0.1).toFixed(2);
-                        if (_this.timeRemaining >= 100) {
-                            clearInterval(interval_1);
-                        }
-                    }, 100);
-                }
+        this.syncService.init(this.quizId);
+        this.syncService.getQuestion().subscribe(function (question) {
+            _this.currentQuestion = question;
+            _this.solutionActive = false;
+            if (_this.timeRemaining == 0 || _this.timeRemaining == 100) {
+                //Progressbar
+                _this.timeRemaining = 0;
+                _this.timeRemainingInSeconds = 10;
+                var interval_1 = setInterval(function () {
+                    _this.timeRemaining += 1;
+                    _this.timeRemainingInSeconds = (_this.timeRemainingInSeconds - 0.1).toFixed(2);
+                    if (_this.timeRemaining >= 100) {
+                        clearInterval(interval_1);
+                    }
+                }, 100);
             }
-        }.bind(this));
-        this.socket.on('solutionResponse', function (message, quizId) {
-            console.log('Got a message from the server: "' + message);
-            if (this.quizId == quizId) {
-                this.currentQuestion = message;
-                this.solutionActive = true;
-            }
-        }.bind(this));
-        this.socket.emit('questionRequest', this.quizId, false);
+        });
+        this.syncService.getSolution().subscribe(function (question) {
+            _this.currentQuestion = question;
+            _this.solutionActive = true;
+        });
+        this.syncService.requestQuestionFromServer(false);
     };
     TelevisionComponent.prototype.ngOnDestroy = function () {
         this.sub.unsubscribe();
     };
-    TelevisionComponent.prototype.onSelect = function (answer) { this.selectedAnswer = answer; };
     __decorate([
         core_1.Input('width'), 
         __metadata('design:type', Object)
@@ -77,9 +66,10 @@ var TelevisionComponent = (function () {
         core_1.Component({
             selector: 'my-tv',
             templateUrl: 'app/templates/television.component.html',
-            directives: [common_1.NgStyle]
+            directives: [common_1.NgStyle],
+            providers: [sync_service_1.SyncService]
         }), 
-        __metadata('design:paramtypes', [router_1.ActivatedRoute, userdata_service_1.UserDataService])
+        __metadata('design:paramtypes', [router_1.ActivatedRoute, userdata_service_1.UserDataService, sync_service_1.SyncService])
     ], TelevisionComponent);
     return TelevisionComponent;
 }());

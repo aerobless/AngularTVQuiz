@@ -40,12 +40,6 @@ io.on('connection', function (socket) {
         sessionStorage.setAnswer(quizId, answerId, playerName);
         console.log(playerName + " registered answer " + answerId + " for quiz " + quizId);
     });
-    socket.on('checkRequest', function (quizId) {
-        let question = sessionStorage.getSolution(quizId);
-        console.log("got check request");
-        socket.broadcast.emit('solutionResponse', question, quizId);
-        socket.emit('solutionResponse', question, quizId);
-    });
 });
 http.listen(applicationConfig.SOCKET_CONNECTION_PORT, function () {
     console.log('Socket server connected. Listening on port: ' + applicationConfig.SOCKET_CONNECTION_PORT);

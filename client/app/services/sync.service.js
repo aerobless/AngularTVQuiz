@@ -9,19 +9,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var applicationConfig = require("../applicationconfig");
+var Rx_1 = require("rxjs/Rx");
 var SyncService = (function () {
     function SyncService() {
-        this.socket = io('http://localhost:8000');
+        this.socket = io(applicationConfig.SERVER_URL + ":" + applicationConfig.SOCKET_CONNECTION_PORT);
+        this.currentQuestion = new Rx_1.Subject();
+        this.currentSolution = new Rx_1.Subject();
+        this.solutionActive = new Rx_1.Subject();
     }
-    SyncService.prototype.ngOnInit = function () {
-    };
-    SyncService.prototype.requestQuestion = function () {
-        this.socket.on('greetings', function (message, id) {
-            console.log('Got a message from the server: "' + message + "', my ID is: " + id);
+    SyncService.prototype.init = function (quizId) {
+        this.quizId = quizId;
+        this.socket.on('questionResponse', function (message, remoteQuizId) {
+            if (this.quizId == remoteQuizId) {
+                this.currentQuestion.next(message);
+            }
         }.bind(this));
-        this.socket.on("connect", function () {
-            console.log("Connected!");
-        });
+        this.socket.on('solutionResponse', function (message, quizId) {
+            if (this.quizId == quizId) {
+                this.solutionActive.next(true);
+                this.currentSolution.next(message);
+            }
+        }.bind(this));
+    };
+    SyncService.prototype.getQuestion = function () {
+        return this.currentQuestion.asObservable();
+    };
+    SyncService.prototype.getSolution = function () {
+        return this.currentSolution.asObservable();
+    };
+    SyncService.prototype.isSolutionActive = function () {
+        return this.solutionActive.asObservable();
+    };
+    SyncService.prototype.requestQuestionFromServer = function (nextQuestion) {
+        this.socket.emit('questionRequest', this.quizId, nextQuestion);
+    };
+    SyncService.prototype.sendAnswerToServer = function (answerId, playerName) {
+        this.socket.emit('solutionRequest', this.quizId, answerId, playerName);
     };
     SyncService = __decorate([
         core_1.Injectable(), 

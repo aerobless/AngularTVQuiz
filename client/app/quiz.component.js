@@ -12,16 +12,16 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var userdata_service_1 = require('./services/userdata.service');
 var question_1 = require('./question');
-var applicationConfig = require("./applicationconfig");
+var sync_service_1 = require("./services/sync.service");
 var QuizComponent = (function () {
-    function QuizComponent(route, userDataService, router) {
+    function QuizComponent(route, userDataService, syncService, router) {
         this.route = route;
         this.userDataService = userDataService;
+        this.syncService = syncService;
         this.router = router;
         this.title = 'Angular TV Quiz';
         this.currentQuestionId = 0;
         this.solutionActive = false;
-        this.socket = io(applicationConfig.SERVER_URL + ":" + applicationConfig.SOCKET_CONNECTION_PORT);
     }
     QuizComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -32,21 +32,16 @@ var QuizComponent = (function () {
         this.playerName = this.userDataService.getUsername();
         this.currentQuestion = new question_1.Question();
         if (this.playerName) {
-            this.socket.on('questionResponse', function (message, quizId) {
-                console.log('Got a message from the server: "' + message.text);
-                if (this.quizId == quizId) {
-                    this.currentQuestion = message;
-                    this.solutionActive = false;
-                    this.selectedAnswer = null;
-                }
-            }.bind(this));
-            this.socket.on('solutionResponse', function (message, quizId) {
-                console.log('Got a message from the server: "' + message);
-                if (this.quizId == quizId) {
-                    this.solutionActive = true;
-                }
-            }.bind(this));
-            this.socket.emit('questionRequest', this.quizId, false);
+            this.syncService.init(this.quizId);
+            this.syncService.getQuestion().subscribe(function (question) {
+                _this.currentQuestion = question;
+                _this.solutionActive = false;
+                _this.selectedAnswer = null;
+            });
+            this.syncService.isSolutionActive().subscribe(function (isActive) {
+                _this.solutionActive = isActive;
+            });
+            this.syncService.requestQuestionFromServer(false);
         }
         else {
             //Navigate back to start if no username was registered
@@ -58,18 +53,19 @@ var QuizComponent = (function () {
         this.sub.unsubscribe();
     };
     QuizComponent.prototype.getMessageFromServer = function () {
-        this.socket.emit('questionRequest', this.quizId, true);
+        this.syncService.requestQuestionFromServer(true);
     };
     QuizComponent.prototype.onSelect = function (answer) {
         this.selectedAnswer = answer;
-        this.socket.emit('solutionRequest', this.quizId, answer.id, this.playerName);
+        this.syncService.sendAnswerToServer(answer.id, this.playerName);
     };
     QuizComponent = __decorate([
         core_1.Component({
             selector: 'my-quiz',
             templateUrl: 'app/templates/quiz.component.html',
+            providers: [sync_service_1.SyncService]
         }), 
-        __metadata('design:paramtypes', [router_1.ActivatedRoute, userdata_service_1.UserDataService, router_1.Router])
+        __metadata('design:paramtypes', [router_1.ActivatedRoute, userdata_service_1.UserDataService, sync_service_1.SyncService, router_1.Router])
     ], QuizComponent);
     return QuizComponent;
 }());
