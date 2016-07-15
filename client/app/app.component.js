@@ -16,7 +16,7 @@ var AppComponent = (function () {
     function AppComponent(userDataService) {
         this.userDataService = userDataService;
         this.title = 'Angular TV Quiz';
-        this.quizId = 'unkown';
+        this.quizId = 'unknown';
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;

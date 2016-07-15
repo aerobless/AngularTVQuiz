@@ -15,7 +15,7 @@ let sessionStorage:SessionStorage = new SessionStorage();
 io.on('connection', function(socket){
     console.log('a user connected');
 
-    socket.on( 'questionRequest', function( quizId, sendNextQuestion ){ //TODO: define contract
+    socket.on( 'questionRequest', function( quizId, sendNextQuestion ){
 
         let question:Question;
         if(sendNextQuestion){
@@ -47,12 +47,12 @@ io.on('connection', function(socket){
         }
     });
 
-    socket.on( 'solutionRequest', function( quizId, answerId, playerName ){ //TODO: define contract
+    socket.on( 'solutionRequest', function( quizId, answerId, playerName ){
         sessionStorage.setAnswer(quizId, answerId, playerName);
         console.log(playerName+" registered answer "+answerId+" for quiz "+quizId);
     });
 
-    socket.on( 'checkRequest', function( quizId){ //TODO: define contract
+    socket.on( 'checkRequest', function( quizId){
         let question = sessionStorage.getSolution(quizId);
         console.log("got check request");
         socket.broadcast.emit( 'solutionResponse', question, quizId);

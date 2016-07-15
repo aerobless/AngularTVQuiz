@@ -7,7 +7,7 @@ import { Answer } from './answer';
 import applicationConfig = require("./applicationconfig");
 
 @Component({
-    selector: 'my-quiz',
+    selector: 'my-tv',
     templateUrl: 'app/templates/television.component.html',
     directives: [NgStyle]
 })
@@ -27,13 +27,14 @@ export class TelevisionComponent implements OnInit, OnDestroy {
     @Input('width') width;
 
     constructor(private route: ActivatedRoute, private userDataService:UserDataService){
+    }
+
+    ngOnInit() {
         this.socket = io(applicationConfig.SERVER_URL+":"+applicationConfig.SOCKET_CONNECTION_PORT);
         this.socket.on('greetings', function(message, id){
             console.log( 'Got a message from the server: "' + message + "', my ID is: " + id );
         }.bind(this));
-    }
 
-    ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
             this.quizId = params['id'];
             this.userDataService.setQuizId(this.quizId);
@@ -48,7 +49,6 @@ export class TelevisionComponent implements OnInit, OnDestroy {
                 this.currentQuestion = message;
                 this.solutionActive = false;
 
-                //TODO: maybe improve to be more stable
                 if(this.timeRemaining == 0 || this.timeRemaining == 100){
                     //Progressbar
                     this.timeRemaining = 0;

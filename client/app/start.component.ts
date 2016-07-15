@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'angular2-cookie/core';
 import { UserDataService } from './services/userdata.service';
@@ -9,6 +9,7 @@ import applicationConfig = require("./applicationconfig");
     templateUrl: 'app/templates/start.component.html',
     providers: [CookieService, UserDataService]
 })
+
 export class StartComponent implements OnInit{
     quizId: string;
     playerName: string;

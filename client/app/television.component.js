@@ -23,13 +23,13 @@ var TelevisionComponent = (function () {
         this.socket = null;
         this.timeRemaining = 0;
         this.timeRemainingInSeconds = 10;
+    }
+    TelevisionComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.socket = io(applicationConfig.SERVER_URL + ":" + applicationConfig.SOCKET_CONNECTION_PORT);
         this.socket.on('greetings', function (message, id) {
             console.log('Got a message from the server: "' + message + "', my ID is: " + id);
         }.bind(this));
-    }
-    TelevisionComponent.prototype.ngOnInit = function () {
-        var _this = this;
         this.sub = this.route.params.subscribe(function (params) {
             _this.quizId = params['id'];
             _this.userDataService.setQuizId(_this.quizId);
@@ -42,7 +42,6 @@ var TelevisionComponent = (function () {
             if (this.quizId == quizId) {
                 this.currentQuestion = message;
                 this.solutionActive = false;
-                //TODO: maybe improve to be more stable
                 if (this.timeRemaining == 0 || this.timeRemaining == 100) {
                     //Progressbar
                     this.timeRemaining = 0;
@@ -76,7 +75,7 @@ var TelevisionComponent = (function () {
     ], TelevisionComponent.prototype, "width", void 0);
     TelevisionComponent = __decorate([
         core_1.Component({
-            selector: 'my-quiz',
+            selector: 'my-tv',
             templateUrl: 'app/templates/television.component.html',
             directives: [common_1.NgStyle]
         }), 

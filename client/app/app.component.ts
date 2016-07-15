@@ -11,10 +11,9 @@ import { UserDataService } from './services/userdata.service';
 })
 export class AppComponent {
     title = 'Angular TV Quiz';
-    quizId:string = 'unkown';
+    quizId:string = 'unknown';
 
     constructor(private userDataService:UserDataService){
-
     }
 
     ngOnInit() {
