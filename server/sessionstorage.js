@@ -47,8 +47,20 @@ var SessionStorage = (function () {
                     session.currentQuestionId = 0;
                 }
                 session.currentQuestion = QUESTIONS[session.currentQuestionId];
+                session.currentQuestion.answers = SessionStorage.shuffle(session.currentQuestion.answers);
             }
         }
+    };
+    SessionStorage.shuffle = function (array) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
+        while (0 !== currentIndex) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+        return array;
     };
     SessionStorage.prototype.setAnswer = function (quizId, answerId, playerName) {
         for (var _i = 0, _a = this.sessions; _i < _a.length; _i++) {
@@ -77,10 +89,15 @@ var SessionStorage = (function () {
                 for (var _d = 0, _e = session.players; _d < _e.length; _d++) {
                     var player = _e[_d];
                     if (player.answer != null) {
-                        if (session.currentQuestion.answers[player.answer].correct) {
-                            player.points += 10;
+                        for (var _f = 0, _g = session.currentQuestion.answers; _f < _g.length; _f++) {
+                            var answer = _g[_f];
+                            if (answer.correct && (player.answer == answer.id)) {
+                                player.points += 10;
+                            }
+                            if (player.answer == answer.id) {
+                                answer.players.push(player.name + " (" + player.points + ")");
+                            }
                         }
-                        session.currentQuestion.answers[player.answer].players.push(player.name + " (" + player.points + ")");
                     }
                     player.answer = null;
                 }

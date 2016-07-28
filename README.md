@@ -23,6 +23,12 @@ A multiplayer quiz app for the tv controlled by players with smartphones. Made i
 + Currently there are only 4 hardcoded questions stored in an array on the server. A file with questions or a databse connection are planned but not yet developed.
 + The app was not designed for security. Cheating is possible, but no permanent damage against the server can be done.
 
+#Installation
+
+1. go to `AngularTVQuiz/` and run `npm install`, then run `typings install`
+2. go to `AngularTVQuiz/client` and run `npm install`, then run `typings install`
+3. Open `AngularTVQuiz/client/applicationconfig.ts` and change the server ip address
+
 #License (MIT)
  > Copyright (c) 2016 Theodor Winter
 

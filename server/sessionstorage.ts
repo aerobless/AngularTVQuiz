@@ -47,8 +47,21 @@ export class SessionStorage {
                     session.currentQuestionId = 0;
                 }
                 session.currentQuestion = QUESTIONS[session.currentQuestionId];
+                session.currentQuestion.answers = SessionStorage.shuffle(session.currentQuestion.answers);
             }
         }
+    }
+
+    private static shuffle(array) {
+        let currentIndex = array.length, temporaryValue, randomIndex;
+        while (0 !== currentIndex) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+        return array;
     }
 
     setAnswer(quizId:string, answerId:number, playerName:string) {
@@ -76,10 +89,14 @@ export class SessionStorage {
                 //Set new answers
                 for (let player of session.players) {
                     if (player.answer != null) {
-                        if (session.currentQuestion.answers[player.answer].correct) {
-                            player.points += 10;
+                        for(let answer of session.currentQuestion.answers){
+                            if (answer.correct && (player.answer == answer.id)) {
+                                player.points += 10;
+                            }
+                            if (player.answer == answer.id){
+                                answer.players.push(player.name + " (" + player.points + ")");
+                            }
                         }
-                        session.currentQuestion.answers[player.answer].players.push(player.name + " (" + player.points + ")");
                     }
                     player.answer = null;
                 }
