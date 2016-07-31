@@ -5,4 +5,3 @@ var Question = (function () {
     return Question;
 }());
 exports.Question = Question;
-//# sourceMappingURL=question.js.map

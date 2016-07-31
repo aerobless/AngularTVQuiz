@@ -30,8 +30,9 @@ var QuizComponent = (function () {
             _this.userDataService.setQuizId(_this.quizId);
         });
         this.playerName = this.userDataService.getUsername();
+        this.playerAvatar = this.userDataService.getAvatar();
         this.currentQuestion = new question_1.Question();
-        if (this.playerName) {
+        if (this.playerName && this.playerAvatar) {
             this.syncService.init(this.quizId);
             this.syncService.getQuestion().subscribe(function (question) {
                 _this.currentQuestion = question;
@@ -57,7 +58,7 @@ var QuizComponent = (function () {
     };
     QuizComponent.prototype.onSelect = function (answer) {
         this.selectedAnswer = answer;
-        this.syncService.sendAnswerToServer(answer.id, this.playerName);
+        this.syncService.sendAnswerToServer(answer.id, this.playerName, this.playerAvatar);
     };
     QuizComponent = __decorate([
         core_1.Component({

@@ -53,6 +53,7 @@ export class TelevisionComponent implements OnInit, OnDestroy {
                         this.timeRemaining += 1;
                         this.timeRemainingInSeconds = parseFloat((this.timeRemainingInSeconds - 0.1).toFixed(2));
                         if (this.timeRemaining >= 100) {
+                            //noinspection TypeScriptUnresolvedFunction
                             clearInterval(interval);
                         }
                     }, 100);

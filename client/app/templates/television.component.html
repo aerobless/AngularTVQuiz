@@ -26,25 +26,21 @@
         </div>
     </div>
     <div *ngIf="solutionActive">
-        <div *ngFor="let answer of currentQuestion.answers" (click)="onSelect(answer)">
+        <div *ngFor="let answer of currentQuestion.answers">
             <div class="col-xs-6">
-                <div class="panel tvSolution" *ngIf="!answer.correct">
+                <div class="panel tvSolution" [ngClass]="{'panel-primary': answer.correct}">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Wrong answer</h3>
+                        <h3 class="panel-title" *ngIf="!answer.correct">Wrong answer</h3>
+                        <h3 class="panel-title" *ngIf="answer.correct">Correct answer</h3>
                     </div>
                     <div class="panel-body">
                         <h1>{{answer.text}}</h1>
-                        <p>{{answer.players}}</p>
-                    </div>
-                </div>
-
-                <div class="panel panel-primary tvSolution" *ngIf="answer.correct">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Correct answer</h3>
-                    </div>
-                    <div class="panel-body">
-                        <h1>{{answer.text}}</h1>
-                        <p>{{answer.players}}</p>
+                        <div *ngFor="let player of answer.players">
+                            <div class="playerAnswerAvatar">
+                                <img src="/images/avatars/{{player.avatar.thumbnail}}" alt="{{player.avatar.description}}" height="74" width="74">
+                                <p>{{player.name}} ({{player.points}})</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

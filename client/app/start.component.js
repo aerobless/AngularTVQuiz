@@ -18,7 +18,6 @@ var StartComponent = (function () {
     function StartComponent(router, userDataService) {
         this.router = router;
         this.userDataService = userDataService;
-        this.playerAvatar = avatar_1.Avatar.getRandom();
         this.avatars = avatar_1.AVATARS;
         this.SERVER_URL = applicationConfig.SERVER_URL;
         this.HTTP_PORT = applicationConfig.HTTP_PORT;
@@ -27,6 +26,7 @@ var StartComponent = (function () {
     StartComponent.prototype.ngOnInit = function () {
         this.quizId = this.makeId(5);
         this.playerName = this.userDataService.getUsername();
+        this.playerAvatar = this.userDataService.getAvatar();
     };
     StartComponent.prototype.makeId = function (idLength) {
         var randomId = "";
@@ -37,7 +37,7 @@ var StartComponent = (function () {
     };
     StartComponent.prototype.onSelect = function (avatar) {
         this.playerAvatar = avatar;
-        //this.syncService.sendAnswerToServer(answer.id, this.playerName);
+        this.userDataService.setAvatar(avatar);
     };
     StartComponent.prototype.startQuiz = function () {
         this.userDataService.setUsername(this.playerName);

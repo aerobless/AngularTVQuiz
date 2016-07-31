@@ -95,3 +95,7 @@ h1 {
     font-size: 34px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
 }
+
+.playerAnswerAvatar{
+    float: left;
+}

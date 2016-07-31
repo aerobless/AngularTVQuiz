@@ -4,6 +4,7 @@ import {UserDataService} from './services/userdata.service';
 import {Question} from './question';
 import {Answer} from './answer';
 import {SyncService} from "./services/sync.service";
+import {Avatar} from "./avatar";
 
 @Component({
     selector: 'my-quiz',
@@ -21,6 +22,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     sub:any;
     quizId:string;
     playerName:string;
+    playerAvatar:Avatar;
 
     constructor(private route:ActivatedRoute, private userDataService:UserDataService, private syncService:SyncService, private router:Router) {
     }
@@ -32,9 +34,10 @@ export class QuizComponent implements OnInit, OnDestroy {
         });
 
         this.playerName = this.userDataService.getUsername();
+        this.playerAvatar = this.userDataService.getAvatar();
         this.currentQuestion = new Question();
 
-        if (this.playerName) {
+        if (this.playerName && this.playerAvatar) {
             this.syncService.init(this.quizId);
 
             this.syncService.getQuestion().subscribe(
@@ -69,6 +72,6 @@ export class QuizComponent implements OnInit, OnDestroy {
 
     onSelect(answer:Answer) {
         this.selectedAnswer = answer;
-        this.syncService.sendAnswerToServer(answer.id, this.playerName);
+        this.syncService.sendAnswerToServer(answer.id, this.playerName, this.playerAvatar);
     }
 }

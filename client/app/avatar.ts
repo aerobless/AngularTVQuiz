@@ -6,6 +6,14 @@ export class Avatar {
     static getRandom(){
         return AVATARS[Math.floor(Math.random()*AVATARS.length)];
     }
+    
+    static getAvatar(requestedAvatar:String){
+        for(let i=0; i<AVATARS.length; i++){
+            if(AVATARS[i].name == requestedAvatar){
+                return AVATARS[i];
+            }
+        }
+    }
 }
 
 export const AVATARS:Avatar[] = [

@@ -44,6 +44,7 @@ var TelevisionComponent = (function () {
                     _this.timeRemaining += 1;
                     _this.timeRemainingInSeconds = parseFloat((_this.timeRemainingInSeconds - 0.1).toFixed(2));
                     if (_this.timeRemaining >= 100) {
+                        //noinspection TypeScriptUnresolvedFunction
                         clearInterval(interval_1);
                     }
                 }, 100);

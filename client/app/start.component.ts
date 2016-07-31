@@ -14,7 +14,7 @@ import {Avatar, AVATARS} from "./avatar";
 export class StartComponent implements OnInit {
     quizId:string;
     playerName:string;
-    playerAvatar:Avatar = Avatar.getRandom();
+    playerAvatar:Avatar;
     avatars:Avatar[] = AVATARS;
     SERVER_URL:string = applicationConfig.SERVER_URL;
     HTTP_PORT:string = applicationConfig.HTTP_PORT;
@@ -26,6 +26,7 @@ export class StartComponent implements OnInit {
     ngOnInit() {
         this.quizId = this.makeId(5);
         this.playerName = this.userDataService.getUsername();
+        this.playerAvatar = this.userDataService.getAvatar();
     }
 
     makeId(idLength:number) {
@@ -40,7 +41,7 @@ export class StartComponent implements OnInit {
 
     onSelect(avatar:Avatar) {
         this.playerAvatar = avatar;
-        //this.syncService.sendAnswerToServer(answer.id, this.playerName);
+        this.userDataService.setAvatar(avatar);
     }
 
     startQuiz() {

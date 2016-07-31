@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import applicationConfig = require("../applicationconfig");
 import {Question} from "../question";
 import {Subject} from "rxjs/Rx";
+import {Avatar} from "../avatar";
 
 @Injectable()
 export class SyncService {
@@ -44,7 +45,7 @@ export class SyncService {
         this.socket.emit('questionRequest', this.quizId, nextQuestion);
     }
 
-    sendAnswerToServer(answerId:number, playerName:string) {
-        this.socket.emit('solutionRequest', this.quizId, answerId, playerName);
+    sendAnswerToServer(answerId:number, playerName:string, playerAvatar:Avatar) {
+        this.socket.emit('solutionRequest', this.quizId, answerId, playerName, playerAvatar);
     }
 }

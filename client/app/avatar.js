@@ -5,6 +5,13 @@ var Avatar = (function () {
     Avatar.getRandom = function () {
         return exports.AVATARS[Math.floor(Math.random() * exports.AVATARS.length)];
     };
+    Avatar.getAvatar = function (requestedAvatar) {
+        for (var i = 0; i < exports.AVATARS.length; i++) {
+            if (exports.AVATARS[i].name == requestedAvatar) {
+                return exports.AVATARS[i];
+            }
+        }
+    };
     return Avatar;
 }());
 exports.Avatar = Avatar;
@@ -55,4 +62,3 @@ exports.AVATARS = [
         thumbnail: 'pig.png'
     }
 ];
-//# sourceMappingURL=avatar.js.map

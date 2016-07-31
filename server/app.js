@@ -36,8 +36,8 @@ io.on('connection', function (socket) {
             }, 1000));
         }
     });
-    socket.on('solutionRequest', function (quizId, answerId, playerName) {
-        sessionStorage.setAnswer(quizId, answerId, playerName);
+    socket.on('solutionRequest', function (quizId, answerId, playerName, playerAvatar) {
+        sessionStorage.setAnswer(quizId, answerId, playerName, playerAvatar);
         console.log(playerName + " registered answer " + answerId + " for quiz " + quizId);
     });
 });

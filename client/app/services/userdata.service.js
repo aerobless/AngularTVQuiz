@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var core_2 = require('angular2-cookie/core');
 var Rx_1 = require("rxjs/Rx");
+var avatar_1 = require("../avatar");
 var UserDataService = (function () {
     function UserDataService(cookieService) {
         this.cookieService = cookieService;
@@ -22,6 +23,18 @@ var UserDataService = (function () {
     UserDataService.prototype.setUsername = function (username) {
         this.cookieService.put(UserDataService.USERNAME, username);
     };
+    UserDataService.prototype.getAvatar = function () {
+        var localName = this.cookieService.get(UserDataService.AVATAR);
+        if (localName) {
+            return avatar_1.Avatar.getAvatar(localName);
+        }
+        else {
+            return avatar_1.Avatar.getRandom();
+        }
+    };
+    UserDataService.prototype.setAvatar = function (avatar) {
+        this.cookieService.put(UserDataService.AVATAR, avatar.name);
+    };
     UserDataService.prototype.getQuizId = function () {
         return this.quizId.asObservable();
     };
@@ -31,6 +44,7 @@ var UserDataService = (function () {
     };
     UserDataService.PREFIX = "AngularTVQuiz_";
     UserDataService.USERNAME = UserDataService.PREFIX + "Username";
+    UserDataService.AVATAR = UserDataService.PREFIX + "Avatar";
     UserDataService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [core_2.CookieService])

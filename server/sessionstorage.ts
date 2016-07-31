@@ -1,6 +1,7 @@
 import {Session} from "./session";
 import {Question} from "../client/app/question";
 import {Player} from "./player";
+import {Avatar} from "../client/app/avatar";
 export class SessionStorage {
     sessions:Session[] = [];
 
@@ -64,16 +65,17 @@ export class SessionStorage {
         return array;
     }
 
-    setAnswer(quizId:string, answerId:number, playerName:string) {
+    setAnswer(quizId:string, answerId:number, playerName:string, playerAvatar:Avatar) {
         for (let session of this.sessions) {
             if (session.quizId == quizId) {
                 for (let player of session.players) {
                     if (player.name === playerName) {
                         player.answer = answerId;
+                        player.avatar = playerAvatar;
                         return;
                     }
                 }
-                let player:Player = {name: playerName, answer: answerId, points: 0};
+                let player:Player = {name: playerName, avatar: playerAvatar, answer: answerId, points: 0};
                 session.players.push(player);
             }
         }
@@ -94,7 +96,7 @@ export class SessionStorage {
                                 player.points += 10;
                             }
                             if (player.answer == answer.id){
-                                answer.players.push(player.name + " (" + player.points + ")");
+                                answer.players.push(player);
                             }
                         }
                     }

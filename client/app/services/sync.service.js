@@ -44,8 +44,8 @@ var SyncService = (function () {
     SyncService.prototype.requestQuestionFromServer = function (nextQuestion) {
         this.socket.emit('questionRequest', this.quizId, nextQuestion);
     };
-    SyncService.prototype.sendAnswerToServer = function (answerId, playerName) {
-        this.socket.emit('solutionRequest', this.quizId, answerId, playerName);
+    SyncService.prototype.sendAnswerToServer = function (answerId, playerName, playerAvatar) {
+        this.socket.emit('solutionRequest', this.quizId, answerId, playerName, playerAvatar);
     };
     SyncService = __decorate([
         core_1.Injectable(), 

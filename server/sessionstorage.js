@@ -62,7 +62,7 @@ var SessionStorage = (function () {
         }
         return array;
     };
-    SessionStorage.prototype.setAnswer = function (quizId, answerId, playerName) {
+    SessionStorage.prototype.setAnswer = function (quizId, answerId, playerName, playerAvatar) {
         for (var _i = 0, _a = this.sessions; _i < _a.length; _i++) {
             var session = _a[_i];
             if (session.quizId == quizId) {
@@ -70,10 +70,11 @@ var SessionStorage = (function () {
                     var player_1 = _c[_b];
                     if (player_1.name === playerName) {
                         player_1.answer = answerId;
+                        player_1.avatar = playerAvatar;
                         return;
                     }
                 }
-                var player = { name: playerName, answer: answerId, points: 0 };
+                var player = { name: playerName, avatar: playerAvatar, answer: answerId, points: 0 };
                 session.players.push(player);
             }
         }
@@ -95,7 +96,7 @@ var SessionStorage = (function () {
                                 player.points += 10;
                             }
                             if (player.answer == answer.id) {
-                                answer.players.push(player.name + " (" + player.points + ")");
+                                answer.players.push(player);
                             }
                         }
                     }

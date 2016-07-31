@@ -4,6 +4,7 @@ import applicationConfig = require("../client/app/applicationconfig");
 import {Question} from "../client/app/question";
 
 var express = require('express');
+//noinspection TypeScriptValidateTypes
 var app = express();
 var server = require('http').Server(app);
 var session = require('express-session');
@@ -47,8 +48,8 @@ io.on('connection', function (socket) {
         }
     });
 
-    socket.on('solutionRequest', function (quizId, answerId, playerName) {
-        sessionStorage.setAnswer(quizId, answerId, playerName);
+    socket.on('solutionRequest', function (quizId, answerId, playerName, playerAvatar) {
+        sessionStorage.setAnswer(quizId, answerId, playerName, playerAvatar);
         console.log(playerName + " registered answer " + answerId + " for quiz " + quizId);
     });
 
