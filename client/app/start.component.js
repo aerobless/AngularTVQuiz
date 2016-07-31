@@ -13,10 +13,13 @@ var router_1 = require('@angular/router');
 var core_2 = require('angular2-cookie/core');
 var userdata_service_1 = require('./services/userdata.service');
 var applicationConfig = require("./applicationconfig");
+var avatar_1 = require("./avatar");
 var StartComponent = (function () {
     function StartComponent(router, userDataService) {
         this.router = router;
         this.userDataService = userDataService;
+        this.playerAvatar = avatar_1.Avatar.getRandom();
+        this.avatars = avatar_1.AVATARS;
         this.SERVER_URL = applicationConfig.SERVER_URL;
         this.HTTP_PORT = applicationConfig.HTTP_PORT;
         this.SOCKET_CONNECTION_PORT = applicationConfig.SOCKET_CONNECTION_PORT;
@@ -31,6 +34,10 @@ var StartComponent = (function () {
         for (var i = 0; i < idLength; i++)
             randomId += possible.charAt(Math.floor(Math.random() * possible.length));
         return randomId;
+    };
+    StartComponent.prototype.onSelect = function (avatar) {
+        this.playerAvatar = avatar;
+        //this.syncService.sendAnswerToServer(answer.id, this.playerName);
     };
     StartComponent.prototype.startQuiz = function () {
         this.userDataService.setUsername(this.playerName);

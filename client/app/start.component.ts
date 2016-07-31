@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {CookieService} from 'angular2-cookie/core';
 import {UserDataService} from './services/userdata.service';
 import applicationConfig = require("./applicationconfig");
+import {Avatar, AVATARS} from "./avatar";
 
 @Component({
     selector: 'my-start',
@@ -13,6 +14,8 @@ import applicationConfig = require("./applicationconfig");
 export class StartComponent implements OnInit {
     quizId:string;
     playerName:string;
+    playerAvatar:Avatar = Avatar.getRandom();
+    avatars:Avatar[] = AVATARS;
     SERVER_URL:string = applicationConfig.SERVER_URL;
     HTTP_PORT:string = applicationConfig.HTTP_PORT;
     SOCKET_CONNECTION_PORT:string = applicationConfig.SOCKET_CONNECTION_PORT;
@@ -33,6 +36,11 @@ export class StartComponent implements OnInit {
             randomId += possible.charAt(Math.floor(Math.random() * possible.length));
 
         return randomId;
+    }
+
+    onSelect(avatar:Avatar) {
+        this.playerAvatar = avatar;
+        //this.syncService.sendAnswerToServer(answer.id, this.playerName);
     }
 
     startQuiz() {

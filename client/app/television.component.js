@@ -42,7 +42,7 @@ var TelevisionComponent = (function () {
                 _this.timeRemainingInSeconds = 10;
                 var interval_1 = setInterval(function () {
                     _this.timeRemaining += 1;
-                    _this.timeRemainingInSeconds = (_this.timeRemainingInSeconds - 0.1).toFixed(2);
+                    _this.timeRemainingInSeconds = parseFloat((_this.timeRemainingInSeconds - 0.1).toFixed(2));
                     if (_this.timeRemaining >= 100) {
                         clearInterval(interval_1);
                     }

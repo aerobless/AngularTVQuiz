@@ -17,6 +17,12 @@
             <span class="input-group-addon">Your name</span>
             <input type="text" [(ngModel)]="playerName" class="form-control" aria-describedby="basic-addon1">
         </div>
+        <div class="input-group">
+            <span class="input-group-addon" style="vertical-align: top; padding-top: 25px">Your avatar</span>
+            <div class="col-md-12" style="padding-left: 0px; padding-right: 0px;">
+                <img *ngFor="let avatar of avatars" (click)="onSelect(avatar)" [ngClass]="{avatarSelected: playerAvatar.name==avatar.name}" src="/images/avatars/{{avatar.thumbnail}}" alt="{{avatar.description}}" height="74" width="74">
+            </div>
+        </div>
 
     </fieldset>
     <button type="button" class="btn btn-raised btn-primary" (click)="startQuiz()">

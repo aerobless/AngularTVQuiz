@@ -51,7 +51,7 @@ export class TelevisionComponent implements OnInit, OnDestroy {
                     this.timeRemainingInSeconds = 10;
                     let interval = setInterval(() => {
                         this.timeRemaining += 1;
-                        this.timeRemainingInSeconds = (this.timeRemainingInSeconds - 0.1).toFixed(2);
+                        this.timeRemainingInSeconds = parseFloat((this.timeRemainingInSeconds - 0.1).toFixed(2));
                         if (this.timeRemaining >= 100) {
                             clearInterval(interval);
                         }

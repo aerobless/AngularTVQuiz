@@ -77,7 +77,21 @@ h1 {
     height: 50px;
 }
 
-/*
- * See https://github.com/angular/angular.io/blob/master/public/docs/_examples/styles.css
- * for the full set of master styles used by the documentation samples
- */
+.avatarSelected {
+    position: relative;
+    height: 70px;
+    width: 70px;
+    background-color: white;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 56px;
+    -ms-flex: 0 0 56px;
+    flex: 0 0 56px;
+    display: inline-block;
+    padding: 0;
+    margin: 2px;
+    border: 0;
+    border-radius: 100%;
+    overflow: hidden;
+    font-size: 34px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+}
