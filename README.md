@@ -2,7 +2,7 @@
 
 A multiplayer quiz app for the tv controlled by players with smartphones. Made in Angular2 and NodeJS.
 
-#Technologies used
+# Technologies used
 
 + Angular2
 + Bootstrap
@@ -10,7 +10,7 @@ A multiplayer quiz app for the tv controlled by players with smartphones. Made i
 + TypeScript
 + NodeJS
 
-#Features
+# Features
 
 + Players can join at any time
 + There's no limit to the amount of players
@@ -18,18 +18,18 @@ A multiplayer quiz app for the tv controlled by players with smartphones. Made i
 + Support for multiple quiz sessions
 + Simple & clean material design
 
-#Limitations
+# Limitations
 
 + Currently there are only 4 hardcoded questions stored in an array on the server. A file with questions or a databse connection are planned but not yet developed.
 + The app was not designed for security. Cheating is possible, but no permanent damage against the server can be done.
 
-#Installation
+# Installation
 
 1. go to `AngularTVQuiz/` and run `npm install`, then run `typings install`
 2. go to `AngularTVQuiz/client` and run `npm install`, then run `typings install`
 3. Open `AngularTVQuiz/client/applicationconfig.ts` and change the server ip address
 
-#License (MIT)
+# License (MIT)
  > Copyright (c) 2016 Theodor Winter
 
  > Permission is hereby granted, free of charge, to any person obtaining a copy
